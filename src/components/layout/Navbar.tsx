@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Container from "./Container";
+import Image from "next/image";
 
 const links = [
   { href: "/", label: "Home", prefetch: false },
@@ -13,9 +14,14 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 border-b border-white/60 bg-white/70 backdrop-blur-xl">
       <Container className="flex h-18 items-center justify-between">
         <Link href="/" className="group flex items-center gap-3" prefetch={false}>
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-zinc-200 bg-white shadow-sm">
-            <span className="text-sm font-bold text-zinc-900">B</span>
-          </div>
+            <Image
+            src="/logo/berycode-logo.jpg"
+            alt="BeryCode"
+            width={160}
+            height={48}
+            className="h-10 w-auto"
+            priority
+          />
 
           <div className="flex flex-col leading-none">
             <span className="text-sm font-semibold tracking-tight text-zinc-900">
