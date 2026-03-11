@@ -1,5 +1,7 @@
 import Container from "@/components/layout/Container";
 import Button from "@/components/ui/Button";
+import Image from "next/image";
+import Link from "next/link";
 
 const badges = [
   "Next.js",
@@ -8,6 +10,33 @@ const badges = [
   "Python",
   "Full-stack",
   "UI/UX",
+];
+
+const stack = [
+  {
+    name: "Next.js",
+    description: "SEO-friendly web architecture",
+    icon: "/tech/nextjs.svg",
+    url: "https://nextjs.org"
+  },
+  {
+    name: "TypeScript",
+    description: "Scalable and safer development",
+    icon: "/tech/typescript.svg",
+    url: "https://www.typescriptlang.org"
+  },
+  {
+    name: "Python",
+    description: "Automation and backend logic",
+    icon: "/tech/python.svg",
+    url: "https://www.python.org"
+  },
+  {
+    name: "Tailwind CSS",
+    description: "Clean and fast UI building",
+    icon: "/tech/tailwindcss.svg",
+    url: "https://tailwindcss.com"
+  },
 ];
 
 export default function Hero() {
@@ -104,21 +133,35 @@ export default function Hero() {
               </div>
 
               <div className="space-y-4">
-                {[
-                  ["Next.js", "SEO-friendly web architecture"],
-                  ["TypeScript", "scalable and safer development"],
-                  ["Python", "automation and backend logic"],
-                  ["Tailwind CSS", "clean and fast UI building"],
-                ].map(([title, text]) => (
-                  <div
-                    key={title}
-                    className="rounded-2xl border border-white/70 bg-white/75 p-4 shadow-sm"
+                {stack.map((tech) => (
+                  <Link
+                    key={tech.name}
+                    href={tech.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block rounded-2xl border border-white/70 bg-white/75 p-4 shadow-sm transition hover:shadow-md hover:border-zinc-300 hover:-translate-y-0.5"
+                    prefetch={false}
                   >
-                    <p className="font-semibold text-zinc-900">{title}</p>
-                    <p className="mt-1 text-sm leading-6 text-zinc-500">
-                      {text}
-                    </p>
-                  </div>
+                    <div className="flex items-start gap-3">
+                      <Image
+                        src={tech.icon}
+                        alt={tech.name}
+                        width={24}
+                        height={24}
+                        className="mt-1"
+                      />
+
+                      <div>
+                        <p className="font-semibold text-zinc-900">
+                          {tech.name}
+                        </p>
+
+                        <p className="mt-1 text-sm leading-6 text-zinc-500">
+                          {tech.description}
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
                 ))}
               </div>
 
