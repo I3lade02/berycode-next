@@ -8,10 +8,11 @@ import { Menu, X } from "lucide-react";
 import Container from "./Container";
 
 const links = [
-  { href: "/", label: "Home" },
-  { href: "/projects", label: "Projects" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
+  { href: "/", label: "Home", prefetch: false },
+  { href: "/projects", label: "Projects", prefetch: false },
+  { href: "/services", label: "Services", prefetch: false },
+  { href: "/about", label: "About", prefetch: false },
+  { href: "/contact", label: "Contact", prefetch: false },
 ];
 
 export default function Navbar() {
