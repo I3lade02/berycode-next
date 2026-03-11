@@ -1,58 +1,70 @@
+import Image from "next/image";
 import Link from "next/link";
-import Container from "../layout/Container";
-import SectionHeading from "../ui/SectionHeading";
+
+import Container from "@/components/layout/Container";
+import SectionHeading from "@/components/ui/SectionHeading";
 import { getFeaturedProjects } from "@/content/projects";
 
-export default function FeaturedProject() {
-    const FeaturedProjects = getFeaturedProjects();
+export default function FeaturedProjects() {
+  const featuredProjects = getFeaturedProjects();
 
-    return (
-        <section className="py-20">
-            <Container className="space-y-10">
-                <SectionHeading
-                    eyebrow="Projects"
-                    title="Featured Work"
-                    description="A selection of projects focused on web applications, developer tools, interactive experiences and custom software ideas."
+  return (
+    <section className="section-tint py-24">
+      <Container className="space-y-12">
+        <SectionHeading
+          eyebrow="Projects"
+          title="Featured work"
+          description="A selection of projects focused on web applications, developer tools, interactive interfaces, and software that solve specific needs."
+        />
+
+        <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+          {featuredProjects.map((project) => (
+            <article
+              key={project.slug}
+              className="glass-card card-hover overflow-hidden rounded-[1.75rem]"
+            >
+              <div className="relative aspect-16/10 w-full overflow-hidden bg-zinc-100">
+                <Image
+                  src={project.image}
+                  alt={`${project.title} project preview`}
+                  fill
+                  className="object-cover transition duration-300 hover:scale-[1.03]"
                 />
+                <div className="absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-black/20 to-transparent" />
+              </div>
 
-                <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-                    {FeaturedProjects.map((project) => (
-                        <article
-                            key={project.slug}
-                            className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
-                        >
-                            <div className="space-y-4">
-                                <div>
-                                    <h3 className="text-xl font-semibold text-zinc-900">
-                                        {project.title}
-                                    </h3>
-                                    <p className="mt-2 text-sm leading-6 text-zinc-600">
-                                        {project.description}
-                                    </p>
-                                </div>
-
-                                <ul className="flex flex-wrap gap-2">
-                                    {project.tech.map((item) => (
-                                        <li
-                                            key={item}
-                                            className="rounded-full bg-zinc-100 px-3 py-1 text-xs font-medium text-zinc-700"
-                                        >
-                                            {item}
-                                        </li>
-                                    ))}
-                                </ul>
-
-                                <Link
-                                    href={`/projects/${project.slug}`}
-                                    className="inline-flex text-sm font-semibold text-zinc-900 hover:text-zinc-700"
-                                >
-                                    View Project
-                                </Link>
-                            </div>
-                        </article>
-                    ))}
+              <div className="space-y-5 p-6">
+                <div>
+                  <h3 className="text-xl font-semibold text-zinc-900">
+                    {project.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-zinc-600">
+                    {project.description}
+                  </p>
                 </div>
-            </Container>
-        </section>
-    );
+
+                <ul className="flex flex-wrap gap-2">
+                  {project.tech.map((item) => (
+                    <li
+                      key={item}
+                      className="rounded-full border border-zinc-200 bg-white/80 px-3 py-1 text-xs font-medium text-zinc-700 shadow-sm"
+                    >
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+
+                <Link
+                  href={`/projects/${project.slug}`}
+                  className="inline-flex items-center text-sm font-semibold text-zinc-900 hover:text-cyan-700"
+                >
+                  View project →
+                </Link>
+              </div>
+            </article>
+          ))}
+        </div>
+      </Container>
+    </section>
+  );
 }
