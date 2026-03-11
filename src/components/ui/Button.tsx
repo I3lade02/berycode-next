@@ -15,6 +15,7 @@ export default function Button({ href, children, className }: ButtonProps) {
         "inline-flex items-center justify-center rounded-xl border border-zinc-900 bg-zinc-900 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-zinc-800",
         className,
       )}
+      prefetch={false}
     >
       {children}
     </Link>

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 
 import Container from "@/components/layout/Container";
 import { getProjectBySlug, projects } from "@/content/projects";
@@ -147,25 +148,27 @@ export default async function ProjectDetailPage({
             {(project.github || project.href) && (
               <div className="flex flex-col gap-3">
                 {project.github ? (
-                  <a
+                  <Link
                     href={project.github}
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex justify-center rounded-xl border border-zinc-900 bg-zinc-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-zinc-800"
+                    prefetch={false}
                   >
                     View GitHub
-                  </a>
+                  </Link>
                 ) : null}
 
                 {project.href ? (
-                  <a
+                  <Link
                     href={project.href}
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex justify-center rounded-xl border border-zinc-200 bg-white px-5 py-3 text-sm font-semibold text-zinc-900 transition hover:bg-zinc-100"
+                    prefetch={false}
                   >
                     Visit Project
-                  </a>
+                  </Link>
                 ) : null}
               </div>
             )}

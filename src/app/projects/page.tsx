@@ -62,6 +62,7 @@ export default function ProjectsPage() {
                 <Link
                   href={`/projects/${project.slug}`}
                   className="inline-flex items-center text-sm font-semibold text-zinc-900 hover:text-cyan-700"
+                  prefetch={false}
                 >
                   Read more →
                 </Link>

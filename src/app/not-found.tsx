@@ -18,6 +18,7 @@ export default function NotFoundPage() {
         <Link
           href="/"
           className="inline-flex rounded-xl bg-zinc-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-zinc-800"
+          prefetch={false}
         >
           Back home
         </Link>

@@ -57,6 +57,7 @@ export default function FeaturedProjects() {
                 <Link
                   href={`/projects/${project.slug}`}
                   className="inline-flex items-center text-sm font-semibold text-zinc-900 hover:text-cyan-700"
+                  prefetch={false}
                 >
                   View project →
                 </Link>
