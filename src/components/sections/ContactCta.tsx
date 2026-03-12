@@ -12,7 +12,7 @@ export default function ContactCta() {
           <div className="relative max-w-2xl space-y-5">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2">
               <span className="h-2 w-2 rounded-full bg-cyan-400" />
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-300">
+              <p className="text-xs font-semibold tracking-[0.2em] text-zinc-300 uppercase">
                 Contact
               </p>
             </div>
@@ -22,9 +22,9 @@ export default function ContactCta() {
             </h2>
 
             <p className="text-base leading-7 text-zinc-300 sm:text-lg">
-              Whether it's a portfolio, an internal tool, an interactive 
-              project, or a more ambitious web application, I'm happy 
-              to see interesting collaborations and new ideas.
+              Whether it&apos;s a portfolio, an internal tool, an interactive
+              project, or a more ambitious web application, I&apos;m happy to
+              see interesting collaborations and new ideas.
             </p>
 
             <Button

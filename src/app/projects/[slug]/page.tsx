@@ -62,9 +62,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function ProjectDetailPage({
-  params,
-}: ProjectPageProps) {
+export default async function ProjectDetailPage({ params }: ProjectPageProps) {
   const { slug } = await params;
   const project = getProjectBySlug(slug);
 
@@ -76,18 +74,18 @@ export default async function ProjectDetailPage({
     <main className="py-20">
       <Container className="space-y-12">
         <div className="max-w-3xl space-y-5">
-          <div className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white/80 px-4 py-2 shadow-sm">
+          <div className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white/80 px-4 py-2 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/80">
             <span className="h-2 w-2 rounded-full bg-cyan-400" />
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">
+            <p className="text-xs font-semibold tracking-[0.2em] text-zinc-500 uppercase dark:text-zinc-400">
               Project
             </p>
           </div>
 
-          <h1 className="text-4xl font-bold tracking-tight text-zinc-900 sm:text-5xl">
+          <h1 className="text-4xl font-bold tracking-tight text-zinc-900 sm:text-5xl dark:text-zinc-100">
             {project.title}
           </h1>
 
-          <p className="text-lg leading-8 text-zinc-600">
+          <p className="text-lg leading-8 text-zinc-600 dark:text-zinc-400">
             {project.longDescription ?? project.description}
           </p>
         </div>
@@ -105,22 +103,24 @@ export default async function ProjectDetailPage({
         <div className="grid gap-8 lg:grid-cols-[2fr_1fr]">
           <section className="glass-card soft-shadow space-y-8 rounded-[1.75rem] p-8">
             <div className="space-y-3">
-              <h2 className="text-2xl font-semibold text-zinc-900">Overview</h2>
-              <p className="leading-7 text-zinc-600">
+              <h2 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-100">
+                Overview
+              </h2>
+              <p className="leading-7 text-zinc-600 dark:text-zinc-400">
                 {project.longDescription ?? project.description}
               </p>
-              <p className="leading-7 text-zinc-600">
-                This project shows my interest in creating something practical and
-                visually strong software with help of modern technologies, clean
-                architecture and emphasis on usability
+              <p className="leading-7 text-zinc-600 dark:text-zinc-400">
+                This project shows my interest in creating something practical
+                and visually strong software with help of modern technologies,
+                clean architecture and emphasis on usability
               </p>
             </div>
 
             <div className="space-y-3">
-              <h2 className="text-2xl font-semibold text-zinc-900">
+              <h2 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-100">
                 What I focused on
               </h2>
-              <ul className="list-disc space-y-2 pl-5 text-zinc-600">
+              <ul className="list-disc space-y-2 pl-5 text-zinc-600 dark:text-zinc-400">
                 <li>Readable and natural user interface</li>
                 <li>Sustainable code structure</li>
                 <li>Responsive frontend and modern tools</li>
@@ -131,13 +131,15 @@ export default async function ProjectDetailPage({
 
           <aside className="glass-card soft-shadow space-y-6 rounded-[1.75rem] p-6">
             <div>
-              <h2 className="text-lg font-semibold text-zinc-900">Tech stack</h2>
+              <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+                Tech stack
+              </h2>
 
               <ul className="mt-4 flex flex-wrap gap-2">
                 {project.tech.map((item) => (
                   <li
                     key={item}
-                    className="rounded-full border border-zinc-200 bg-white/80 px-3 py-1 text-sm font-medium text-zinc-700 shadow-sm"
+                    className="rounded-full border border-zinc-200 bg-white/80 px-3 py-1 text-sm font-medium text-zinc-700 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/80 dark:text-zinc-300"
                   >
                     {item}
                   </li>
@@ -164,7 +166,7 @@ export default async function ProjectDetailPage({
                     href={project.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex justify-center rounded-xl border border-zinc-200 bg-white px-5 py-3 text-sm font-semibold text-zinc-900 transition hover:bg-zinc-100"
+                    className="inline-flex justify-center rounded-xl border border-zinc-200 bg-white px-5 py-3 text-sm font-semibold text-zinc-900 transition hover:bg-zinc-100 dark:border-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-800"
                     prefetch={false}
                   >
                     Visit Project
