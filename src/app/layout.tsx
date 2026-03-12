@@ -55,7 +55,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="min-h-screen text-zinc-900 antialiased dark:text-zinc-100">
+      <body className="min-h-screen bg-white text-zinc-900 antialiased">
         <JsonLd data={personJsonLd} />
         <JsonLd data={websiteJsonLd} />
 

@@ -13,7 +13,7 @@ export default function AboutPreview() {
           />
 
           <div className="glass-card soft-shadow rounded-[1.75rem] p-8">
-            <div className="space-y-4 text-base leading-7 text-zinc-600 dark:text-zinc-400">
+            <div className="space-y-4 text-base leading-7 text-zinc-600">
               <p>
                 I work across frontend and backend and enjoy the modern React
                 ecosystem, TypeScript, Python, and creating workflows that solve
@@ -21,14 +21,14 @@ export default function AboutPreview() {
               </p>
 
               <p>
-                My portfolio includes interactive tools, self-hosted platforms,
-                3D experiments, and utilities focused on practical use and pure
+                My portfolio includes interactive tools, self-hosted platforms, 
+                3D experiments, and utilities focused on practical use and pure 
                 user experience.
               </p>
 
               <p>
-                My goal is not just to &quot;code something&quot;, but to build
-                a digital product that is technically solid, easy to use and has
+                My goal is not just to "code something", but to build a digital
+                product that is technically solid, easy to use and has
                 its own character.
               </p>
             </div>

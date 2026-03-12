@@ -23,7 +23,7 @@ export default function FeaturedProjects() {
               key={project.slug}
               className="glass-card card-hover overflow-hidden rounded-[1.75rem]"
             >
-              <div className="relative aspect-16/10 w-full overflow-hidden bg-zinc-100 dark:bg-zinc-800">
+              <div className="relative aspect-16/10 w-full overflow-hidden bg-zinc-100">
                 <Image
                   src={project.image}
                   alt={`${project.title} project preview`}
@@ -35,10 +35,10 @@ export default function FeaturedProjects() {
 
               <div className="space-y-5 p-6">
                 <div>
-                  <h3 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100">
+                  <h3 className="text-xl font-semibold text-zinc-900">
                     {project.title}
                   </h3>
-                  <p className="mt-2 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
+                  <p className="mt-2 text-sm leading-6 text-zinc-600">
                     {project.description}
                   </p>
                 </div>
@@ -47,7 +47,7 @@ export default function FeaturedProjects() {
                   {project.tech.map((item) => (
                     <li
                       key={item}
-                      className="rounded-full border border-zinc-200 bg-white/80 px-3 py-1 text-xs font-medium text-zinc-700 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/80 dark:text-zinc-300"
+                      className="rounded-full border border-zinc-200 bg-white/80 px-3 py-1 text-xs font-medium text-zinc-700 shadow-sm"
                     >
                       {item}
                     </li>
@@ -56,7 +56,7 @@ export default function FeaturedProjects() {
 
                 <Link
                   href={`/projects/${project.slug}`}
-                  className="inline-flex items-center text-sm font-semibold text-zinc-900 hover:text-cyan-700 dark:text-zinc-100"
+                  className="inline-flex items-center text-sm font-semibold text-zinc-900 hover:text-cyan-700"
                   prefetch={false}
                 >
                   View project →

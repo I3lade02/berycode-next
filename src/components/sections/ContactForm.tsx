@@ -69,10 +69,7 @@ export default function ContactForm() {
       noValidate
     >
       <div className="space-y-2">
-        <label
-          htmlFor="name"
-          className="text-sm font-medium text-zinc-800 dark:text-zinc-200"
-        >
+        <label htmlFor="name" className="text-sm font-medium text-zinc-800">
           Name
         </label>
         <Input id="name" placeholder="Your name" {...register("name")} />
@@ -82,10 +79,7 @@ export default function ContactForm() {
       </div>
 
       <div className="space-y-2">
-        <label
-          htmlFor="email"
-          className="text-sm font-medium text-zinc-800 dark:text-zinc-200"
-        >
+        <label htmlFor="email" className="text-sm font-medium text-zinc-800">
           Email
         </label>
         <Input
@@ -100,10 +94,7 @@ export default function ContactForm() {
       </div>
 
       <div className="space-y-2">
-        <label
-          htmlFor="message"
-          className="text-sm font-medium text-zinc-800 dark:text-zinc-200"
-        >
+        <label htmlFor="message" className="text-sm font-medium text-zinc-800">
           Message
         </label>
         <Textarea
@@ -129,7 +120,9 @@ export default function ContactForm() {
       ) : null}
 
       {isSubmitSuccessful ? (
-        <p className="text-sm text-green-600">Message successfully submitted</p>
+        <p className="text-sm text-green-600">
+          Message successfully submitted
+        </p>
       ) : null}
     </form>
   );

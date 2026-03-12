@@ -24,25 +24,25 @@ export default function ContactPage() {
           <ContactForm />
 
           <div className="glass-card soft-shadow rounded-[1.75rem] p-8">
-            <p className="text-xs font-semibold tracking-[0.2em] text-zinc-500 uppercase dark:text-zinc-400">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">
               Collaboration
             </p>
 
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-zinc-900">
               What we can talk about
             </h2>
 
-            <ul className="mt-6 space-y-4 text-zinc-600 dark:text-zinc-400">
-              <li className="rounded-2xl border border-white/70 bg-white/80 p-4 dark:border-zinc-800/80 dark:bg-zinc-900/80">
+            <ul className="mt-6 space-y-4 text-zinc-600">
+              <li className="rounded-2xl border border-white/70 bg-white/80 p-4">
                 <strong>Web pages and portfolios</strong>
               </li>
-              <li className="rounded-2xl border border-white/70 bg-white/80 p-4 dark:border-zinc-800/80 dark:bg-zinc-900/80">
+              <li className="rounded-2xl border border-white/70 bg-white/80 p-4">
                 <strong>Internal tools and utilities</strong>
               </li>
-              <li className="rounded-2xl border border-white/70 bg-white/80 p-4 dark:border-zinc-800/80 dark:bg-zinc-900/80">
+              <li className="rounded-2xl border border-white/70 bg-white/80 p-4">
                 <strong>Redesign of existing projects</strong>
               </li>
-              <li className="rounded-2xl border border-white/70 bg-white/80 p-4 dark:border-zinc-800/80 dark:bg-zinc-900/80">
+              <li className="rounded-2xl border border-white/70 bg-white/80 p-4">
                 <strong>Interactive or experimental web projects</strong>
               </li>
             </ul>

@@ -17,25 +17,25 @@ const stack = [
     name: "Next.js",
     description: "SEO-friendly web architecture",
     icon: "/tech/nextjs.svg",
-    url: "https://nextjs.org",
+    url: "https://nextjs.org"
   },
   {
     name: "TypeScript",
     description: "Scalable and safer development",
     icon: "/tech/typescript.svg",
-    url: "https://www.typescriptlang.org",
+    url: "https://www.typescriptlang.org"
   },
   {
     name: "Python",
     description: "Automation and backend logic",
     icon: "/tech/python.svg",
-    url: "https://www.python.org",
+    url: "https://www.python.org"
   },
   {
     name: "Tailwind CSS",
     description: "Clean and fast UI building",
     icon: "/tech/tailwindcss.svg",
-    url: "https://tailwindcss.com",
+    url: "https://tailwindcss.com"
   },
 ];
 
@@ -51,25 +51,24 @@ export default function Hero() {
       <Container className="relative">
         <div className="grid items-center gap-14 lg:grid-cols-[1.2fr_0.8fr]">
           <div className="space-y-8">
-            <div className="inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white/80 px-4 py-2 text-xs font-semibold tracking-[0.2em] text-zinc-600 uppercase shadow-sm backdrop-blur dark:bg-zinc-900/80 dark:text-zinc-400">
+            <div className="inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-zinc-600 shadow-sm backdrop-blur">
               <span className="h-2 w-2 rounded-full bg-cyan-400" />
               BeryCode Portfolio
             </div>
 
             <div className="space-y-5">
-              <h1 className="max-w-4xl text-5xl font-bold tracking-tight text-zinc-900 sm:text-6xl xl:text-7xl dark:text-zinc-100">
+              <h1 className="max-w-4xl text-5xl font-bold tracking-tight text-zinc-900 sm:text-6xl xl:text-7xl">
                 Modern websites,
                 <br />
                 <span className="text-gradient">interactive apps</span>
-                <br />
-                and ideas turned into reality.
+                <br />and ideas turned into reality.
               </h1>
 
-              <p className="max-w-3xl text-lg leading-8 text-zinc-600 sm:text-xl dark:text-zinc-400">
-                I&apos;m Ondra Beránek, full-stack web developer focused on
-                creation of modern web apps, developer tools, interactive and
-                practical projects build with Next.js, React, TypeScript and
-                Python.
+              <p className="max-w-3xl text-lg leading-8 text-zinc-600 sm:text-xl">
+                I'm Ondra Beránek, full-stack web developer focused on creation
+                of modern web apps, developer tools, interactive 
+                and practical projects build with Next.js, React,
+                TypeScript and Python.
               </p>
             </div>
 
@@ -77,7 +76,7 @@ export default function Hero() {
               {badges.map((badge) => (
                 <span
                   key={badge}
-                  className="tech-pill rounded-full px-4 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-300"
+                  className="tech-pill rounded-full px-4 py-2 text-sm font-medium text-zinc-700"
                 >
                   {badge}
                 </span>
@@ -88,7 +87,7 @@ export default function Hero() {
               <Button href="/projects">View Projects</Button>
               <Button
                 href="/contact"
-                className="border-zinc-200 bg-white text-zinc-900 shadow-sm hover:bg-zinc-100 dark:border-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-800"
+                className="border-zinc-200 bg-white text-zinc-900 shadow-sm hover:bg-zinc-100"
               >
                 Contact Me
               </Button>
@@ -96,28 +95,22 @@ export default function Hero() {
 
             <div className="flex flex-wrap gap-8 pt-4">
               <div>
-                <p className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+                <p className="text-2xl font-bold tracking-tight text-zinc-900">
                   3+
                 </p>
-                <p className="text-sm text-zinc-500 dark:text-zinc-400">
-                  Featured projects
-                </p>
+                <p className="text-sm text-zinc-500">Featured projects</p>
               </div>
               <div>
-                <p className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+                <p className="text-2xl font-bold tracking-tight text-zinc-900">
                   Full-stack
                 </p>
-                <p className="text-sm text-zinc-500 dark:text-zinc-400">
-                  frontend + backend focus
-                </p>
+                <p className="text-sm text-zinc-500">frontend + backend focus</p>
               </div>
               <div>
-                <p className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+                <p className="text-2xl font-bold tracking-tight text-zinc-900">
                   Custom
                 </p>
-                <p className="text-sm text-zinc-500 dark:text-zinc-400">
-                  Tools & web experiences
-                </p>
+                <p className="text-sm text-zinc-500">Tools & web experiences</p>
               </div>
             </div>
           </div>
@@ -126,10 +119,10 @@ export default function Hero() {
             <div className="glass-card soft-shadow relative overflow-hidden rounded-4xl p-6">
               <div className="mb-6 flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
+                  <p className="text-sm font-semibold text-zinc-900">
                     Active stack
                   </p>
-                  <p className="text-sm text-zinc-500 dark:text-zinc-400">
+                  <p className="text-sm text-zinc-500">
                     Technologies I enjoy building with
                   </p>
                 </div>
@@ -146,7 +139,7 @@ export default function Hero() {
                     href={tech.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block rounded-2xl border border-white/70 bg-white/75 p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-md dark:border-zinc-800/80 dark:bg-zinc-900/75"
+                    className="block rounded-2xl border border-white/70 bg-white/75 p-4 shadow-sm transition hover:shadow-md hover:border-zinc-300 hover:-translate-y-0.5"
                     prefetch={false}
                   >
                     <div className="flex items-start gap-3">
@@ -159,11 +152,11 @@ export default function Hero() {
                       />
 
                       <div>
-                        <p className="font-semibold text-zinc-900 dark:text-zinc-100">
+                        <p className="font-semibold text-zinc-900">
                           {tech.name}
                         </p>
 
-                        <p className="mt-1 text-sm leading-6 text-zinc-500 dark:text-zinc-400">
+                        <p className="mt-1 text-sm leading-6 text-zinc-500">
                           {tech.description}
                         </p>
                       </div>
@@ -173,7 +166,7 @@ export default function Hero() {
               </div>
 
               <div className="mt-6 rounded-2xl bg-zinc-900 p-5 text-white">
-                <p className="text-sm font-semibold tracking-[0.2em] text-zinc-400 uppercase">
+                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-400">
                   Focus
                 </p>
                 <p className="mt-2 text-lg font-semibold">
