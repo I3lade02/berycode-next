@@ -29,7 +29,7 @@ export default function ProjectsPage() {
               key={project.slug}
               className="glass-card card-hover overflow-hidden rounded-[1.75rem]"
             >
-              <div className="relative aspect-16/10 w-full bg-zinc-100">
+              <div className="relative aspect-16/10 w-full bg-zinc-100 dark:bg-zinc-800">
                 <Image
                   src={project.image}
                   alt={`${project.title} preview`}
@@ -40,11 +40,11 @@ export default function ProjectsPage() {
               </div>
 
               <div className="space-y-4 p-6">
-                <h2 className="text-xl font-semibold text-zinc-900">
+                <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100">
                   {project.title}
                 </h2>
 
-                <p className="text-sm leading-6 text-zinc-600">
+                <p className="text-sm leading-6 text-zinc-600 dark:text-zinc-400">
                   {project.description}
                 </p>
 
@@ -52,7 +52,7 @@ export default function ProjectsPage() {
                   {project.tech.map((item) => (
                     <li
                       key={item}
-                      className="rounded-full border border-zinc-200 bg-white/80 px-3 py-1 text-xs font-medium text-zinc-700 shadow-sm"
+                      className="rounded-full border border-zinc-200 bg-white/80 px-3 py-1 text-xs font-medium text-zinc-700 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/80 dark:text-zinc-300"
                     >
                       {item}
                     </li>
@@ -61,7 +61,7 @@ export default function ProjectsPage() {
 
                 <Link
                   href={`/projects/${project.slug}`}
-                  className="inline-flex items-center text-sm font-semibold text-zinc-900 hover:text-cyan-700"
+                  className="inline-flex items-center text-sm font-semibold text-zinc-900 hover:text-cyan-700 dark:text-zinc-100"
                   prefetch={false}
                 >
                   Read more →
