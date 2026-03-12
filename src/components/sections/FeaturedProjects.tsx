@@ -1,20 +1,24 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 
 import Container from "@/components/layout/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
+import { useLanguage } from "@/components/providers/LanguageProvider";
 import { getFeaturedProjects } from "@/content/projects";
 
 export default function FeaturedProjects() {
   const featuredProjects = getFeaturedProjects();
+  const { t } = useLanguage();
 
   return (
     <section className="section-tint py-24">
       <Container className="space-y-12">
         <SectionHeading
-          eyebrow="Projects"
-          title="Featured work"
-          description="A selection of projects focused on web applications, developer tools, interactive interfaces, and software that solve specific needs."
+          eyebrow={t.featuredProjects.eyebrow}
+          title={t.featuredProjects.title}
+          description={t.featuredProjects.description}
         />
 
         <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
@@ -56,10 +60,10 @@ export default function FeaturedProjects() {
 
                 <Link
                   href={`/projects/${project.slug}`}
-                  className="inline-flex items-center text-sm font-semibold text-zinc-900 hover:text-cyan-700"
                   prefetch={false}
+                  className="inline-flex items-center text-sm font-semibold text-zinc-900 hover:text-cyan-700"
                 >
-                  View project →
+                  {t.featuredProjects.viewProject}
                 </Link>
               </div>
             </article>

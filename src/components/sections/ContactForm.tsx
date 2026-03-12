@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 
 import Input from "@/components/ui/Input";
 import Textarea from "@/components/ui/Textarea";
+import { useLanguage } from "@/components/providers/LanguageProvider";
 import {
   contactSchema,
   type ContactFormValues,
@@ -16,6 +17,8 @@ const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
 const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 
 export default function ContactForm() {
+  const { t } = useLanguage();
+
   const {
     register,
     handleSubmit,
@@ -34,7 +37,7 @@ export default function ContactForm() {
   async function onSubmit(values: ContactFormValues) {
     if (!serviceId || !templateId || !publicKey) {
       setError("root", {
-        message: "Missing config of EmailJS, please check .env.local .",
+        message: t.contactForm.configError,
       });
       return;
     }
@@ -57,7 +60,7 @@ export default function ContactForm() {
     } catch (error) {
       console.error("EmailJS error:", error);
       setError("root", {
-        message: "Unable to send message, please try again.",
+        message: t.contactForm.submitError,
       });
     }
   }
@@ -70,9 +73,13 @@ export default function ContactForm() {
     >
       <div className="space-y-2">
         <label htmlFor="name" className="text-sm font-medium text-zinc-800">
-          Name
+          {t.contactForm.name}
         </label>
-        <Input id="name" placeholder="Your name" {...register("name")} />
+        <Input
+          id="name"
+          placeholder={t.contactForm.namePlaceholder}
+          {...register("name")}
+        />
         {errors.name ? (
           <p className="text-sm text-red-600">{errors.name.message}</p>
         ) : null}
@@ -80,12 +87,12 @@ export default function ContactForm() {
 
       <div className="space-y-2">
         <label htmlFor="email" className="text-sm font-medium text-zinc-800">
-          Email
+          {t.contactForm.email}
         </label>
         <Input
           id="email"
           type="email"
-          placeholder="your@email.com"
+          placeholder={t.contactForm.emailPlaceholder}
           {...register("email")}
         />
         {errors.email ? (
@@ -95,11 +102,11 @@ export default function ContactForm() {
 
       <div className="space-y-2">
         <label htmlFor="message" className="text-sm font-medium text-zinc-800">
-          Message
+          {t.contactForm.message}
         </label>
         <Textarea
           id="message"
-          placeholder="Tell me a bit about your project or idea..."
+          placeholder={t.contactForm.messagePlaceholder}
           {...register("message")}
         />
         {errors.message ? (
@@ -112,7 +119,7 @@ export default function ContactForm() {
         disabled={isSubmitting}
         className="inline-flex rounded-xl border border-zinc-900 bg-zinc-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {isSubmitting ? "Sending..." : "Send message"}
+        {isSubmitting ? t.contactForm.sending : t.contactForm.send}
       </button>
 
       {errors.root ? (
@@ -120,9 +127,7 @@ export default function ContactForm() {
       ) : null}
 
       {isSubmitSuccessful ? (
-        <p className="text-sm text-green-600">
-          Message successfully submitted
-        </p>
+        <p className="text-sm text-green-600">{t.contactForm.success}</p>
       ) : null}
     </form>
   );

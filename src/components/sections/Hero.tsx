@@ -1,7 +1,10 @@
+"use client";
+
 import Container from "@/components/layout/Container";
 import Button from "@/components/ui/Button";
 import Image from "next/image";
 import Link from "next/link";
+import { useLanguage } from "../providers/LanguageProvider";
 
 const badges = [
   "Next.js",
@@ -40,6 +43,8 @@ const stack = [
 ];
 
 export default function Hero() {
+  const { t } = useLanguage();
+
   return (
     <section className="relative overflow-hidden py-24 sm:py-32">
       <div className="bg-grid absolute inset-0 opacity-40" />
@@ -53,22 +58,20 @@ export default function Hero() {
           <div className="space-y-8">
             <div className="inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-zinc-600 shadow-sm backdrop-blur">
               <span className="h-2 w-2 rounded-full bg-cyan-400" />
-              BeryCode Portfolio
+              {t.hero.badge}
             </div>
 
             <div className="space-y-5">
               <h1 className="max-w-4xl text-5xl font-bold tracking-tight text-zinc-900 sm:text-6xl xl:text-7xl">
-                Modern websites,
+                {t.hero.title1}
                 <br />
-                <span className="text-gradient">interactive apps</span>
-                <br />and ideas turned into reality.
+                <span className="text-gradient">{t.hero.title2}</span>
+                <br />
+                {t.hero.title3}
               </h1>
 
               <p className="max-w-3xl text-lg leading-8 text-zinc-600 sm:text-xl">
-                I'm Ondra Beránek, full-stack web developer focused on creation
-                of modern web apps, developer tools, interactive 
-                and practical projects build with Next.js, React,
-                TypeScript and Python.
+                {t.hero.description}
               </p>
             </div>
 
@@ -84,51 +87,30 @@ export default function Hero() {
             </div>
 
             <div className="flex flex-wrap gap-4">
-              <Button href="/projects">View Projects</Button>
+              <Button href="/projects">{t.hero.viewProjects}</Button>
               <Button
                 href="/contact"
                 className="border-zinc-200 bg-white text-zinc-900 shadow-sm hover:bg-zinc-100"
               >
-                Contact Me
+                {t.hero.contactMe}
               </Button>
-            </div>
-
-            <div className="flex flex-wrap gap-8 pt-4">
-              <div>
-                <p className="text-2xl font-bold tracking-tight text-zinc-900">
-                  3+
-                </p>
-                <p className="text-sm text-zinc-500">Featured projects</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold tracking-tight text-zinc-900">
-                  Full-stack
-                </p>
-                <p className="text-sm text-zinc-500">frontend + backend focus</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold tracking-tight text-zinc-900">
-                  Custom
-                </p>
-                <p className="text-sm text-zinc-500">Tools & web experiences</p>
-              </div>
             </div>
           </div>
 
-          <div className="relative hidden lg:block xl:pr-10">
+          <div className="relative hidden lg:block">
             <div className="glass-card soft-shadow relative overflow-hidden rounded-4xl p-6">
               <div className="mb-6 flex items-center justify-between">
                 <div>
                   <p className="text-sm font-semibold text-zinc-900">
-                    Active stack
+                    {t.hero.activeStack}
                   </p>
                   <p className="text-sm text-zinc-500">
-                    Technologies I enjoy building with
+                    {t.hero.activeStackDesc}
                   </p>
                 </div>
 
                 <div className="rounded-full border border-cyan-200 bg-cyan-50 px-3 py-1 text-xs font-semibold text-cyan-700">
-                  Live
+                  {t.hero.live}
                 </div>
               </div>
 
@@ -167,11 +149,10 @@ export default function Hero() {
 
               <div className="mt-6 rounded-2xl bg-zinc-900 p-5 text-white">
                 <p className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-400">
-                  Focus
+                  {t.hero.focus}
                 </p>
                 <p className="mt-2 text-lg font-semibold">
-                  Web apps, dev tools, experiments and practical digital
-                  products.
+                  {t.hero.focusText}
                 </p>
               </div>
             </div>
