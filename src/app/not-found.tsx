@@ -33,8 +33,7 @@ export default function NotFoundPage() {
         "status = 404",
         "ui.panel = missing",
         "fallback = /projects",
-        "context = unknown",
-        "site.name = not-found"
+        "component.load = failed"
       ],
     },
   } as const;
@@ -90,27 +89,27 @@ export default function NotFoundPage() {
           </div>
 
           <div className="relative mx-auto h-110 w-full max-w-130">
-            <div className="glass-card soft-shadow absolute top-2 left-6 w-52 rounded-3xl p-4 rotate-[-8deg]">
+            <div className="glass-card soft-shadow absolute top-2 left-6 w-52 rounded-3xl p-4 rotate-[-8deg] float-fast">
               <p className="font-mono text-sm text-zinc-700">{c.cards[0]}</p>
             </div>
 
-            <div className="glass-card soft-shadow absolute top-20 right-4 w-56 rounded-3xl p-5 rotate-[7deg]">
+            <div className="glass-card soft-shadow absolute top-20 right-4 w-56 rounded-3xl p-5 rotate-[7deg] float-medium">
               <p className="font-mono text-sm text-zinc-700">{c.cards[1]}</p>
             </div>
 
-            <div className="glass-card soft-shadow absolute top-36 left-14 w-60 rounded-3xl p-5 rotate-[4deg]">
+            <div className="glass-card soft-shadow absolute top-36 left-14 w-60 rounded-3xl p-5 rotate-[4deg] float-slow">
               <p className="font-mono text-sm text-zinc-700">{c.cards[2]}</p>
             </div>
 
-            <div className="glass-card soft-shadow absolute right-10 bottom-20 w-52 rounded-3xl p-4 -rotate-6">
+            <div className="glass-card soft-shadow absolute right-10 bottom-20 w-52 rounded-3xl p-4 -rotate-6 float-medium">
               <p className="font-mono text-sm text-zinc-700">{c.cards[3]}</p>
             </div>
 
-            <div className="glass-card soft-shadow absolute bottom-10 right-70 w-48 rounded-3xl p-4 rotate-12">
+            <div className="glass-card soft-shadow absolute bottom-10 right-70 w-48 rounded-3xl p-4 rotate-12 float-slow">
               <p className="font-mono text-sm text-zinc-700">component.load = failed</p>
             </div>
 
-            <div className="glass-card soft-shadow absolute bottom-45 right-5 w-50 rounded-3xl p-4 -rotate-12">
+            <div className="glass-card soft-shadow absolute bottom-45 right-5 w-50 rounded-3xl p-4 -rotate-12 float-medium">
               <p className="font-mono text-sm text-zinc-700">git.checkout("home")</p>
             </div>
           </div>

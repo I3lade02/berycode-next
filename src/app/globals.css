@@ -91,6 +91,10 @@ textarea:focus {
     inset 0 1px 0 rgb(255 255 255 / 0.9);
 }
 
+.glass-card:hover {
+  transform: translateY(-3px) scale(1.02);
+}
+
 .tech-pill {
   background: linear-gradient(to bottom, rgb(255 255 255 / 0.95), rgb(244 244 245 / 0.85));
   border: 1px solid rgb(228 228 231 / 0.9);
@@ -146,4 +150,34 @@ textarea:focus {
     linear-gradient(to bottom, rgb(255 255 255 / 0.72), rgb(244 244 245 / 0.65));
   border-top: 1px solid rgb(228 228 231 / 0.6);
   border-bottom: 1px solid rgb(228 228 231 / 0.6);
+}
+
+@keyframes floatSlow {
+  0% { transform: translate(0px, 0px); }
+  50% { transform: translate(15px, -15px); }
+  100% { transform: translate(0px, 0px); }
+}
+
+@keyframes floatMedium {
+  0% { transform: translate(0px, 0px); }
+  50% { transform: translate(-15px, 15px); }
+  100% { transform: translate(0px, 0px); }
+}
+
+@keyframes floatFast {
+  0% { transform: translate(0px, 0px); }
+  50% { transform: translate(15px, 15px); }
+  100% { transform: translate(0px, 0px); }
+}
+
+.float-slow {
+  animation: floatSlow 8s ease-in-out infinite;
+}
+
+.float-medium {
+  animation: floatMedium 6s ease-in-out infinite;
+}
+
+.float-fast {
+  animation: floatFast 4s ease-in-out infinite;
 }
