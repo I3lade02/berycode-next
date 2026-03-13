@@ -9,6 +9,12 @@ export const translations = {
       about: "O mně",
       contact: "Kontakt",
     },
+
+    language: {
+      cs: "CZ",
+      en: "EN",
+    },
+
     hero: {
       badge: "BeryCode Portfolio",
       title1: "Moderní weby,",
@@ -24,7 +30,26 @@ export const translations = {
       focusText:
         "Webové aplikace, developer nástroje, experimenty a praktické digitální produkty.",
       live: "Live",
+      stackCards: [
+        {
+          title: "Next.js",
+          description: "SEO-friendly webová architektura",
+        },
+        {
+          title: "TypeScript",
+          description: "škálovatelnější a bezpečnější vývoj",
+        },
+        {
+          title: "Python",
+          description: "automatizace a backend logika",
+        },
+        {
+          title: "Tailwind CSS",
+          description: "čistá a rychlá tvorba UI",
+        },
+      ],
     },
+
     featuredProjects: {
       eyebrow: "Projekty",
       title: "Vybraná práce",
@@ -32,15 +57,7 @@ export const translations = {
         "Výběr projektů zaměřených na webové aplikace, developer nástroje, interaktivní rozhraní a software řešící konkrétní potřeby.",
       viewProject: "Zobrazit projekt →",
     },
-    aboutPreview: {
-      eyebrow: "O mně",
-      title: "Tvořím užitečné věci pomocí kódu",
-      description:
-        "Zaměřuji se na webové aplikace, čisté rozhraní a projekty, které propojují vývoj, experiment a praktické využití.",
-      p1: "Pracuji napříč frontendem i backendem a baví mě moderní React ekosystém, TypeScript, Python a tvorba workflow, která řeší reálné problémy.",
-      p2: "V mém portfoliu se objevují interaktivní nástroje, self-hosted platformy, 3D experimenty i utility orientované na praktické použití a čistou uživatelskou zkušenost.",
-      p3: "Mým cílem není jen něco nakódovat, ale postavit digitální produkt, který je technicky solidní, dobře použitelný a má vlastní charakter.",
-    },
+
     services: {
       eyebrow: "Služby",
       title: "Co mohu nabídnout",
@@ -69,18 +86,82 @@ export const translations = {
         },
       ],
     },
+
+    aboutPreview: {
+      eyebrow: "O mně",
+      title: "Tvořím užitečné věci pomocí kódu",
+      description:
+        "Zaměřuji se na webové aplikace, čisté rozhraní a projekty, které propojují vývoj, experiment a praktické využití.",
+      p1: "Pracuji napříč frontendem i backendem a baví mě moderní React ekosystém, TypeScript, Python a tvorba workflow, která řeší reálné problémy.",
+      p2: "V mém portfoliu se objevují interaktivní nástroje, self-hosted platformy, 3D experimenty i utility orientované na praktické použití a čistou uživatelskou zkušenost.",
+      p3: "Mým cílem není jen něco nakódovat, ale postavit digitální produkt, který je technicky solidní, dobře použitelný a má vlastní charakter.",
+    },
+
+    cta: {
+      badge: "Kontakt",
+      title: "Chceš spolu něco postavit?",
+      description:
+        "Ať už jde o portfolio, interní nástroj, interaktivní projekt nebo ambicióznější webovou aplikaci, rád se podívám na zajímavou spolupráci i nové nápady.",
+      button: "Ozvat se",
+    },
+
+    projectsPage: {
+      eyebrow: "Projekty",
+      title: "Vybrané projekty",
+      description:
+        "Širší pohled na software, webové aplikace, experimenty a nástroje, které jsem navrhoval a stavěl s důrazem na funkčnost i čistý vizuál.",
+      readMore: "Zjistit více →",
+    },
+
+    projectDetail: {
+      badge: "Projekt",
+      overview: "Přehled",
+      overviewText:
+        "Tento projekt odráží můj zájem o tvorbu praktického a vizuálně silného softwaru pomocí moderních technologií, čisté architektury a důrazu na použitelnost.",
+      focusTitle: "Na co jsem se soustředil",
+      focusPoints: [
+        "čitelné a přirozené uživatelské rozhraní",
+        "udržitelná struktura kódu",
+        "responzivní frontend a moderní tooling",
+        "funkčnost s prostorem pro další rozšiřování",
+      ],
+      techStack: "Použité technologie",
+      github: "Zobrazit GitHub",
+      visit: "Navštívit projekt",
+    },
+
     aboutPage: {
       eyebrow: "O mně",
       title: "O mně",
       description:
         "Vyvíjím moderní webové aplikace, interaktivní nástroje a praktická digitální řešení se zaměřením na použitelnost, výkon a čistou implementaci.",
+      p1: "Jsem Ondra Beránek, developer zaměřený na webové technologie, kreativní rozhraní a software projekty, které mají praktický smysl.",
+      p2: "Moje práce často propojuje frontend s backend logikou, vlastním toolingem a experimenty s technologiemi jako Next.js, React, TypeScript, Python nebo Three.js.",
+      p3: "Baví mě tvořit projekty, které jsou technicky zajímavé a zároveň skutečně použitelné, ať už jde o developer utility, interaktivní vizualizace nebo self-hosted systémy.",
+      focusAreas: "Oblasti zaměření",
+      areas: [
+        "moderní webové aplikace",
+        "interaktivní rozhraní",
+        "developer nástroje a utility",
+        "self-hosted a experimentální projekty",
+      ],
     },
+
     contactPage: {
       eyebrow: "Kontakt",
       title: "Ozvi se",
       description:
-        "Pokud chceš probrat projekt, spolupráci nebo zajímavý nápad, ozvi se.",
+        "Pokud chceš probrat projekt, spolupráci nebo zajímavý nápad, ozvi se. Tahle stránka je otevřená dobrým digitálním konverzacím.",
+      collaboration: "Spolupráce",
+      talkAbout: "Co můžeme probrat",
+      items: [
+        "webové stránky a portfolia",
+        "interní nástroje a utility",
+        "redesign existujících projektů",
+        "interaktivní nebo experimentální webové aplikace",
+      ],
     },
+
     contactForm: {
       name: "Jméno",
       email: "Email",
@@ -94,21 +175,21 @@ export const translations = {
       configError: "Chybí EmailJS konfigurace v .env.local.",
       submitError: "Nepodařilo se odeslat zprávu. Zkus to prosím znovu.",
     },
+
     footer: {
       rights: "Všechna práva vyhrazena.",
       builtWith: "Postaveno pomocí Next.js, TypeScriptu a Tailwind CSS.",
     },
+
     notFound: {
+      code: "404",
       title: "Stránka nenalezena",
       description:
         "Tahle stránka se ztratila v digitální mlze. Pojďme tě vrátit někam užitečnějším.",
       backHome: "Zpět domů",
     },
-    language: {
-      cs: "CZ",
-      en: "EN",
-    },
   },
+
   en: {
     nav: {
       home: "Home",
@@ -117,6 +198,12 @@ export const translations = {
       about: "About",
       contact: "Contact",
     },
+
+    language: {
+      cs: "CZ",
+      en: "EN",
+    },
+
     hero: {
       badge: "BeryCode Portfolio",
       title1: "Modern websites,",
@@ -132,7 +219,26 @@ export const translations = {
       focusText:
         "Web apps, dev tools, experiments and practical digital products.",
       live: "Live",
+      stackCards: [
+        {
+          title: "Next.js",
+          description: "SEO-friendly web architecture",
+        },
+        {
+          title: "TypeScript",
+          description: "scalable and safer development",
+        },
+        {
+          title: "Python",
+          description: "automation and backend logic",
+        },
+        {
+          title: "Tailwind CSS",
+          description: "clean and fast UI building",
+        },
+      ],
     },
+
     featuredProjects: {
       eyebrow: "Projects",
       title: "Featured work",
@@ -140,15 +246,7 @@ export const translations = {
         "A selection of projects focused on web applications, developer tools, interactive interfaces and software built to solve specific needs.",
       viewProject: "View project →",
     },
-    aboutPreview: {
-      eyebrow: "About",
-      title: "Building useful things with code",
-      description:
-        "I focus on web applications, clean interfaces and projects that combine development, experimentation and real-world usefulness.",
-      p1: "I work across both frontend and backend development and enjoy modern React ecosystems, TypeScript, Python and building workflows that solve real problems.",
-      p2: "My portfolio includes interactive tools, self-hosted platforms, 3D experiments and utility-driven applications with a strong focus on practical use and clean user experience.",
-      p3: "My goal is not just to code something, but to build digital products that are technically solid, usable and have their own character.",
-    },
+
     services: {
       eyebrow: "Services",
       title: "What I can offer",
@@ -177,18 +275,82 @@ export const translations = {
         },
       ],
     },
+
+    aboutPreview: {
+      eyebrow: "About",
+      title: "Building useful things with code",
+      description:
+        "I focus on web applications, clean interfaces and projects that combine development, experimentation and real-world usefulness.",
+      p1: "I work across both frontend and backend development and enjoy modern React ecosystems, TypeScript, Python and building workflows that solve real problems.",
+      p2: "My portfolio includes interactive tools, self-hosted platforms, 3D experiments and utility-driven applications with a strong focus on practical use and clean user experience.",
+      p3: "My goal is not just to code something, but to build digital products that are technically solid, usable and have their own character.",
+    },
+
+    cta: {
+      badge: "Contact",
+      title: "Want to build something together?",
+      description:
+        "Whether it’s a portfolio, internal tool, interactive project or a more ambitious web application, I’m open to interesting collaborations and fresh ideas.",
+      button: "Get in touch",
+    },
+
+    projectsPage: {
+      eyebrow: "Projects",
+      title: "Selected projects",
+      description:
+        "A broader look at software, web applications, experiments and tools I designed and built with a focus on functionality and clean visual execution.",
+      readMore: "Read more →",
+    },
+
+    projectDetail: {
+      badge: "Project",
+      overview: "Overview",
+      overviewText:
+        "This project reflects my interest in building practical and visually strong software using modern technologies, clean architecture and a strong focus on usability.",
+      focusTitle: "What I focused on",
+      focusPoints: [
+        "clear and natural user interface",
+        "maintainable code structure",
+        "responsive frontend and modern tooling",
+        "functionality with room for future growth",
+      ],
+      techStack: "Tech stack",
+      github: "View GitHub",
+      visit: "Visit Project",
+    },
+
     aboutPage: {
       eyebrow: "About",
       title: "About me",
       description:
         "I build modern web applications, interactive tools and practical digital solutions with a focus on usability, performance and clean implementation.",
+      p1: "I’m Ondra Beránek, a developer focused on web technologies, creative interfaces and software projects with practical value.",
+      p2: "My work often combines frontend development with backend logic, custom tooling and experiments using technologies such as Next.js, React, TypeScript, Python and Three.js.",
+      p3: "I enjoy creating projects that are technically interesting and genuinely useful, whether that means developer utilities, interactive visualizations or self-hosted systems.",
+      focusAreas: "Focus areas",
+      areas: [
+        "modern web applications",
+        "interactive interfaces",
+        "developer tools & utilities",
+        "self-hosted and experimental projects",
+      ],
     },
+
     contactPage: {
       eyebrow: "Contact",
       title: "Get in touch",
       description:
-        "If you want to discuss a project, collaboration or an interesting idea, feel free to reach out.",
+        "If you want to discuss a project, collaboration or an interesting idea, feel free to reach out. This page is open to good digital conversations.",
+      collaboration: "Collaboration",
+      talkAbout: "What we can talk about",
+      items: [
+        "websites and portfolios",
+        "internal tools and utilities",
+        "redesign of existing projects",
+        "interactive or experimental web applications",
+      ],
     },
+
     contactForm: {
       name: "Name",
       email: "Email",
@@ -202,19 +364,18 @@ export const translations = {
       configError: "EmailJS configuration is missing in .env.local.",
       submitError: "Failed to send the message. Please try again.",
     },
+
     footer: {
       rights: "All rights reserved.",
       builtWith: "Built with Next.js, TypeScript and Tailwind CSS.",
     },
+
     notFound: {
+      code: "404",
       title: "Page not found",
       description:
         "This page wandered off into the digital fog. Let’s get you back somewhere useful.",
       backHome: "Back home",
-    },
-    language: {
-      cs: "CZ",
-      en: "EN",
     },
   },
 } as const;

@@ -1,7 +1,12 @@
+"use client";
+
 import Container from "@/components/layout/Container";
 import Button from "@/components/ui/Button";
+import { useLanguage } from "@/components/providers/LanguageProvider";
 
 export default function ContactCta() {
+  const { t } = useLanguage();
+
   return (
     <section className="py-24">
       <Container>
@@ -13,25 +18,23 @@ export default function ContactCta() {
             <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2">
               <span className="h-2 w-2 rounded-full bg-cyan-400" />
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-300">
-                Contact
+                {t.cta.badge}
               </p>
             </div>
 
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-              Want to build something together?
+              {t.cta.title}
             </h2>
 
             <p className="text-base leading-7 text-zinc-300 sm:text-lg">
-              Whether it's a portfolio, an internal tool, an interactive 
-              project, or a more ambitious web application, I'm happy 
-              to see interesting collaborations and new ideas.
+              {t.cta.description}
             </p>
 
             <Button
               href="/contact"
               className="border-white bg-white text-zinc-900 hover:bg-zinc-200"
             >
-              Get in touch
+              {t.cta.button}
             </Button>
           </div>
         </div>

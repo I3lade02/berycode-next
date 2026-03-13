@@ -1,71 +1,18 @@
+"use client";
+
 import Image from "next/image";
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import Link from "next/link";
+import { notFound, useParams } from "next/navigation";
 
 import Container from "@/components/layout/Container";
-import { getProjectBySlug, projects } from "@/content/projects";
-import { siteConfig } from "@/lib/metadata";
+import { useLanguage } from "@/components/providers/LanguageProvider";
+import { getProjectBySlug } from "@/content/projects";
+import { getLocalizedText } from "@/lib/i18n/project-text";
 
-type ProjectPageProps = {
-  params: Promise<{
-    slug: string;
-  }>;
-};
+export default function ProjectDetailPage() {
+  const params = useParams<{ slug: string }>();
+  const { t, locale } = useLanguage();
 
-export async function generateStaticParams() {
-  return projects.map((project) => ({
-    slug: project.slug,
-  }));
-}
-
-export async function generateMetadata({
-  params,
-}: ProjectPageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const project = getProjectBySlug(slug);
-
-  if (!project) {
-    return {
-      title: "Project not found",
-    };
-  }
-
-  const title = project.title;
-  const description = project.longDescription ?? project.description;
-  const url = `${siteConfig.url}/projects/${project.slug}`;
-
-  return {
-    title,
-    description,
-    alternates: {
-      canonical: url,
-    },
-    openGraph: {
-      title,
-      description,
-      url,
-      type: "article",
-      siteName: siteConfig.name,
-      images: [
-        {
-          url: project.image,
-          alt: `${project.title} preview`,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-    },
-  };
-}
-
-export default async function ProjectDetailPage({
-  params,
-}: ProjectPageProps) {
-  const { slug } = await params;
+  const slug = params.slug;
   const project = getProjectBySlug(slug);
 
   if (!project) {
@@ -79,23 +26,24 @@ export default async function ProjectDetailPage({
           <div className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white/80 px-4 py-2 shadow-sm">
             <span className="h-2 w-2 rounded-full bg-cyan-400" />
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">
-              Project
+              {t.projectDetail.badge}
             </p>
           </div>
 
           <h1 className="text-4xl font-bold tracking-tight text-zinc-900 sm:text-5xl">
-            {project.title}
+            {getLocalizedText(project.title, locale)}
           </h1>
 
           <p className="text-lg leading-8 text-zinc-600">
-            {project.longDescription ?? project.description}
+            {getLocalizedText(project.longDescription, locale) ||
+              getLocalizedText(project.description, locale)}
           </p>
         </div>
 
         <div className="glass-card soft-shadow relative aspect-video w-full overflow-hidden rounded-4xl">
           <Image
             src={project.image}
-            alt={`${project.title} detailed preview`}
+            alt={`${getLocalizedText(project.title, locale)} detailed preview`}
             fill
             className="object-cover"
             priority
@@ -105,33 +53,35 @@ export default async function ProjectDetailPage({
         <div className="grid gap-8 lg:grid-cols-[2fr_1fr]">
           <section className="glass-card soft-shadow space-y-8 rounded-[1.75rem] p-8">
             <div className="space-y-3">
-              <h2 className="text-2xl font-semibold text-zinc-900">Overview</h2>
+              <h2 className="text-2xl font-semibold text-zinc-900">
+                {t.projectDetail.overview}
+              </h2>
               <p className="leading-7 text-zinc-600">
-                {project.longDescription ?? project.description}
+                {getLocalizedText(project.longDescription, locale) ||
+                  getLocalizedText(project.description, locale)}
               </p>
               <p className="leading-7 text-zinc-600">
-                This project shows my interest in creating something practical and
-                visually strong software with help of modern technologies, clean
-                architecture and emphasis on usability
+                {t.projectDetail.overviewText}
               </p>
             </div>
 
             <div className="space-y-3">
               <h2 className="text-2xl font-semibold text-zinc-900">
-                What I focused on
+                {t.projectDetail.focusTitle}
               </h2>
               <ul className="list-disc space-y-2 pl-5 text-zinc-600">
-                <li>Readable and natural user interface</li>
-                <li>Sustainable code structure</li>
-                <li>Responsive frontend and modern tools</li>
-                <li>Functionality with space for further expansion</li>
+                {t.projectDetail.focusPoints.map((point) => (
+                  <li key={point}>{point}</li>
+                ))}
               </ul>
             </div>
           </section>
 
           <aside className="glass-card soft-shadow space-y-6 rounded-[1.75rem] p-6">
             <div>
-              <h2 className="text-lg font-semibold text-zinc-900">Tech stack</h2>
+              <h2 className="text-lg font-semibold text-zinc-900">
+                {t.projectDetail.techStack}
+              </h2>
 
               <ul className="mt-4 flex flex-wrap gap-2">
                 {project.tech.map((item) => (
@@ -148,27 +98,25 @@ export default async function ProjectDetailPage({
             {(project.github || project.href) && (
               <div className="flex flex-col gap-3">
                 {project.github ? (
-                  <Link
+                  <a
                     href={project.github}
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex justify-center rounded-xl border border-zinc-900 bg-zinc-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-zinc-800"
-                    prefetch={false}
                   >
-                    View GitHub
-                  </Link>
+                    {t.projectDetail.github}
+                  </a>
                 ) : null}
 
                 {project.href ? (
-                  <Link
+                  <a
                     href={project.href}
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex justify-center rounded-xl border border-zinc-200 bg-white px-5 py-3 text-sm font-semibold text-zinc-900 transition hover:bg-zinc-100"
-                    prefetch={false}
                   >
-                    Visit Project
-                  </Link>
+                    {t.projectDetail.visit}
+                  </a>
                 ) : null}
               </div>
             )}

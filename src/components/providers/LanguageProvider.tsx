@@ -26,6 +26,7 @@ export default function LanguageProvider({ children }: Props) {
 
   useEffect(() => {
     const saved = localStorage.getItem("berycode-locale") as Locale | null;
+
     if (saved === "cs" || saved === "en") {
       setLocaleState(saved);
       document.documentElement.lang = saved;

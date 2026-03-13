@@ -7,10 +7,11 @@ import Container from "@/components/layout/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 import { getFeaturedProjects } from "@/content/projects";
+import { getLocalizedText } from "@/lib/i18n/project-text";
 
 export default function FeaturedProjects() {
   const featuredProjects = getFeaturedProjects();
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
 
   return (
     <section className="section-tint py-24">
@@ -30,7 +31,7 @@ export default function FeaturedProjects() {
               <div className="relative aspect-16/10 w-full overflow-hidden bg-zinc-100">
                 <Image
                   src={project.image}
-                  alt={`${project.title} project preview`}
+                  alt={`${getLocalizedText(project.title, locale)} project preview`}
                   fill
                   className="object-cover transition duration-300 hover:scale-[1.03]"
                 />
@@ -40,10 +41,10 @@ export default function FeaturedProjects() {
               <div className="space-y-5 p-6">
                 <div>
                   <h3 className="text-xl font-semibold text-zinc-900">
-                    {project.title}
+                    {getLocalizedText(project.title, locale)}
                   </h3>
                   <p className="mt-2 text-sm leading-6 text-zinc-600">
-                    {project.description}
+                    {getLocalizedText(project.description, locale)}
                   </p>
                 </div>
 

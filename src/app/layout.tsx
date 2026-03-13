@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
     default: siteConfig.title,
-    template: "%s | Ondra Beran",
+    template: "%s | Ondra Beránek",
   },
   description: siteConfig.description,
 };
