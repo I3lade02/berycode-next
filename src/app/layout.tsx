@@ -6,6 +6,8 @@ import Navbar from "@/components/layout/Navbar";
 import JsonLd from "@/components/seo/JsonLd";
 import LanguageProvider from "@/components/providers/LanguageProvider";
 import { siteConfig } from "@/lib/metadata";
+import PageTransition from "@/components/layout/PageTransition";
+import { title } from "process";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -47,7 +49,9 @@ export default function RootLayout({
 
           <div className="flex min-h-screen flex-col">
             <Navbar />
-            <div className="flex-1">{children}</div>
+            <PageTransition>
+              <div className="flex-1">{children}</div>
+            </PageTransition>
             <Footer />
           </div>
         </LanguageProvider>

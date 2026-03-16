@@ -3,6 +3,7 @@
 import Container from "@/components/layout/Container";
 import Button from "@/components/ui/Button";
 import { useLanguage } from "@/components/providers/LanguageProvider";
+import { useState } from "react";
 
 const badges = [
   "Next.js",
@@ -14,10 +15,30 @@ const badges = [
 ];
 
 export default function Hero() {
+  const [pos, setPos] = useState({ x: 0, y: 0 });
   const { t } = useLanguage();
 
   return (
-    <section className="relative overflow-hidden py-24 sm:py-32">
+    <section 
+      className="relative overflow-hidden py-24 sm:py-32"
+      onMouseMove={(e) => 
+        setPos({
+          x: e.clientX,
+          y: e.clientY,
+        })
+      }
+    >
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background: `radial-gradient(
+            600px circle at ${pos.x}px ${pos.y}px,
+            rgba(56,189,248,0.12),
+            transparent 40%
+          )`,
+        }}
+      />
+
       <div className="bg-grid absolute inset-0 opacity-40" />
 
       <div className="hero-ring hero-ring-cyan absolute top-16 -left-15 h-64 w-64" />
