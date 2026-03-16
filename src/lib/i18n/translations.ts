@@ -23,7 +23,7 @@ export const translations = {
       description:
         "Jsem Ondra Beránek, full-stack web developer zaměřený na tvorbu moderních webových aplikací, developer nástrojů, interaktivních projektů a praktických řešení pomocí Next.js, Reactu, TypeScriptu a Pythonu.",
       viewProjects: "Zobrazit projekty",
-      contactMe: "Kontaktovat mě",
+      contactMe: "Kontaktujte mě",
       activeStack: "Aktivní stack",
       activeStackDesc: "technologie, se kterými rád stavím",
       focus: "Zaměření",
