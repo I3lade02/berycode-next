@@ -1,0 +1,29 @@
+{
+  "$comment": "Fictional example projects with placeholder channel IDs. Copy to backend/config/projects.json (git-ignored), replace with real projects and real channel IDs, then run: npm run support -- projects:sync backend/config/projects.json",
+  "projects": [
+    {
+      "code": "demo-kavarna",
+      "name": "Kavárna U Modrého Hrnku",
+      "aliases": ["modry hrnek", "kavarna demo"],
+      "slackChannelId": "C0DEMO00001",
+      "active": true,
+      "public": true
+    },
+    {
+      "code": "demo-eshop",
+      "name": "Fiktivní e-shop Lipnice",
+      "aliases": ["lipnice shop"],
+      "slackChannelId": "C0DEMO00002",
+      "active": true,
+      "public": false
+    },
+    {
+      "code": "demo-archiv",
+      "name": "Archivní demo projekt",
+      "aliases": [],
+      "slackChannelId": "C0DEMO00003",
+      "active": false,
+      "public": false
+    }
+  ]
+}

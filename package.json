@@ -5,10 +5,16 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "node scripts/copy-support-backend.mjs",
     "start": "next start",
     "lint": "eslint",
     "format": "prettier . --write",
-    "check-format": "prettier . --check"
+    "check-format": "prettier . --check",
+    "support": "php backend/bin/support.php",
+    "support:dev": "php -S 127.0.0.1:8080 -t backend/web backend/dev/router.php",
+    "support:test-db": "docker run -d --rm --name berycode-support-test-db -e MARIADB_ROOT_PASSWORD=support-test -e MARIADB_DATABASE=support_test -p 127.0.0.1:33306:3306 mariadb:10.11",
+    "test": "npm run test:support",
+    "test:support": "php backend/tests/run.php"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",

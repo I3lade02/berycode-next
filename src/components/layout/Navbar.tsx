@@ -20,6 +20,7 @@ export default function Navbar() {
     { href: "/services", label: t.nav.services },
     { href: "/about", label: t.nav.about },
     { href: "/contact", label: t.nav.contact },
+    { href: "/support", label: t.nav.support },
   ];
 
   return (
@@ -37,13 +38,13 @@ export default function Navbar() {
         </Link>
 
         {/* desktop menu */}
-        <nav className="hidden items-center gap-2 rounded-full border border-zinc-200/80 bg-white/80 p-1 shadow-sm md:flex">
+        <nav className="hidden items-center gap-1 rounded-full border border-zinc-200/80 bg-white/80 p-1 shadow-sm md:flex lg:gap-2">
           {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               prefetch={false}
-              className={`rounded-full px-4 py-2 text-sm font-medium transition
+              className={`rounded-full px-2.5 py-2 text-sm font-medium transition lg:px-4
                 ${
                   pathname === link.href
                     ? "bg-zinc-900 text-white"

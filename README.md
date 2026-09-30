@@ -18,6 +18,16 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
+## Customer support (`/support`)
+
+The support form saves tickets through a PHP + MySQL backend deployed next to the static export (`backend/`, copied into `out/` by `npm run build`) and posts them to Slack. First deployment, step by step: [docs/support-go-live.md](docs/support-go-live.md). Reference for setup, configuration, cron and troubleshooting: [docs/support-setup.md](docs/support-setup.md).
+
+```bash
+npm run support:test-db   # MariaDB for tests (Docker)
+npm test                  # PHP backend tests
+npm run support -- help   # operator CLI (migrations, projects, retries, status)
+```
+
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More

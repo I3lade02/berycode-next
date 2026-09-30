@@ -1,0 +1,29 @@
+{
+  "$comment": "Fictional projects used only by the automated tests.",
+  "projects": [
+    {
+      "code": "acme-web",
+      "name": "Acme Web Studio",
+      "aliases": ["acme", "ACME   Website"],
+      "slackChannelId": "C0ACME0001",
+      "active": true,
+      "public": true
+    },
+    {
+      "code": "nord-shop",
+      "name": "Nordic Shop",
+      "aliases": ["nordic"],
+      "slackChannelId": "G0NORD0001",
+      "active": true,
+      "public": false
+    },
+    {
+      "code": "old-site",
+      "name": "Old Site",
+      "aliases": [],
+      "slackChannelId": "C0OLD00001",
+      "active": false,
+      "public": true
+    }
+  ]
+}

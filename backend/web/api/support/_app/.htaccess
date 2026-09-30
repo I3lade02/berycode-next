@@ -1,0 +1,10 @@
+# Nothing in this directory is meant to be requested over HTTP.
+# Defense in depth only: every file here is side-effect free when requested
+# directly, so the backend stays safe on hosts that ignore .htaccess.
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+</IfModule>

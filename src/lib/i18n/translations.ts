@@ -8,6 +8,7 @@ export const translations = {
       services: "Služby",
       about: "O mně",
       contact: "Kontakt",
+      support: "Podpora",
     },
 
     language: {
@@ -176,6 +177,140 @@ export const translations = {
       submitError: "Nepodařilo se odeslat zprávu. Zkus to prosím znovu.",
     },
 
+    supportPage: {
+      eyebrow: "Podpora",
+      title: "Nahlaste problém nebo požádejte o změnu",
+      description:
+        "Něco na vašem projektu nefunguje, jak má, nebo potřebujete úpravu? Popište to ve formuláři – více chyb nebo změn můžete poslat najednou v jednom tiketu. Odpověď přijde na e-mail, který uvedete.",
+      howItWorks: "Jak to funguje",
+      steps: [
+        "Vyplňte kontakt a název nebo kód projektu.",
+        "Každou chybu nebo změnu přidejte jako samostatný požadavek – až 10 v jednom tiketu.",
+        "Po odeslání dostanete číslo tiketu. Odpověď přijde na zadaný e-mail.",
+      ],
+      projectHintTitle: "Nevíte kód projektu?",
+      projectHint:
+        "Stačí název projektu. Kód najdete i v odkazu na podporu, který jste ode mě dostali.",
+      privacyNote:
+        "Neposílejte prosím hesla, přístupové údaje ani jiné citlivé informace.",
+    },
+
+    supportForm: {
+      requiredNote: "Všechna pole jsou povinná, pokud není uvedeno jinak.",
+      name: "Jméno",
+      namePlaceholder: "Jan Novák",
+      email: "E-mail",
+      emailPlaceholder: "jan@firma.cz",
+      emailHint: "Na tuto adresu přijde odpověď.",
+      project: "Projekt",
+      projectPlaceholder: "Název nebo kód projektu",
+      projectHint: "Např. název webu nebo kód z odkazu, který jste dostali.",
+      subject: "Předmět",
+      subjectPlaceholder: "Stručně, o co jde",
+      description: "Popis",
+      descriptionPlaceholder:
+        "Co se stalo, kde to nastává, jak to zopakovat a co jste očekávali…",
+      descriptionCounter: "{count} / {max} znaků",
+      contactSection: "Kontakt a projekt",
+      issuesSection: "Co potřebujete vyřešit",
+      issuesHint:
+        "Každou chybu nebo změnu popište jako samostatný požadavek. Do jednoho tiketu jich můžete přidat až 10.",
+      issueTitle: "Požadavek {n}",
+      removeIssue: "Odebrat",
+      removeIssueLabel: "Odebrat požadavek {n}",
+      addIssue: "Přidat další požadavek",
+      maxIssuesReached: "Do jednoho tiketu lze přidat nejvýše 10 požadavků.",
+      issueAdded: "Přidán požadavek {n}.",
+      issueRemoved: "Požadavek {n} byl odebrán.",
+      summaryIssuePrefix: "Požadavek {n}: ",
+      issueNouns: {
+        one: "požadavek",
+        few: "požadavky",
+        many: "požadavku",
+        other: "požadavků",
+      },
+      requestType: "Typ",
+      requestTypes: {
+        bug: { label: "Chyba", hint: "Něco nefunguje, jak má" },
+        change_request: {
+          label: "Požadavek na změnu",
+          hint: "Úprava nebo nová funkce",
+        },
+        other: { label: "Jiné", hint: "Dotaz nebo cokoli dalšího" },
+      },
+      priority: "Priorita",
+      priorities: {
+        normal: { label: "Normální", hint: "Běžný požadavek" },
+        high: { label: "Vysoká", hint: "Blokuje provoz nebo zákazníky" },
+      },
+      honeypot: "Tohle pole nevyplňujte",
+      submit: "Odeslat požadavek",
+      submitMany: "Odeslat {count} {noun}",
+      submitting: "Odesílám…",
+      summaryTitle: "Formulář obsahuje chyby:",
+      suggestionsLabel: "Měli jste na mysli:",
+      errors: {
+        name: {
+          required: "Vyplňte své jméno.",
+          too_short: "Jméno musí mít alespoň 2 znaky.",
+          too_long: "Jméno může mít nejvýše 100 znaků.",
+        },
+        email: {
+          required: "Vyplňte e-mail.",
+          invalid: "Zadejte platnou e-mailovou adresu.",
+          too_long: "E-mail může mít nejvýše 254 znaků.",
+        },
+        project: {
+          required: "Uveďte název nebo kód projektu.",
+          too_long: "Název projektu může mít nejvýše 100 znaků.",
+          project_not_found:
+            "Tento projekt se nepodařilo najít. Zkontrolujte název nebo kód projektu.",
+          project_ambiguous:
+            "Zadání odpovídá více projektům. Použijte prosím přesný kód projektu.",
+        },
+        subject: {
+          required: "Vyplňte předmět.",
+          too_short: "Předmět musí mít alespoň 5 znaků.",
+          too_long: "Předmět může mít nejvýše 150 znaků.",
+        },
+        description: {
+          required: "Popište svůj požadavek.",
+          too_short: "Popis musí mít alespoň 20 znaků.",
+          too_long: "Popis může mít nejvýše 5 000 znaků.",
+        },
+        requestType: {
+          required: "Vyberte typ požadavku.",
+        },
+        priority: {
+          required: "Vyberte prioritu.",
+        },
+        issues: {
+          required: "Přidejte alespoň jeden požadavek.",
+          too_many: "Do jednoho tiketu lze přidat nejvýše 10 požadavků.",
+          invalid: "Požadavky se nepodařilo zpracovat.",
+        },
+        generic: "Zkontrolujte prosím tuto hodnotu.",
+      },
+      rootErrors: {
+        network:
+          "Nepodařilo se ověřit, že požadavek dorazil. Zkontrolujte připojení a zkuste to znovu – opakované odeslání nevytvoří duplicitní tiket.",
+        rate_limited:
+          "Odeslali jste příliš mnoho požadavků. Zkuste to prosím znovu za {minutes} min.",
+        unavailable:
+          "Požadavek se teď nepodařilo uložit. Zkuste to prosím za chvíli znovu, případně použijte kontaktní formulář.",
+        conflict:
+          "Tento požadavek už byl odeslán s jiným obsahem. Obnovte stránku a odešlete ho znovu.",
+        rejected: "Požadavek se nepodařilo odeslat.",
+      },
+      contactLink: "Kontaktní formulář",
+      successTitle: "Tiket byl přijat",
+      successReference: "Číslo vašeho tiketu",
+      successIssues: "Obsahuje {count} {noun}.",
+      successBody:
+        "Tiket je uložený. Odpověď přijde na {email}. Při další komunikaci prosím uvádějte číslo tiketu.",
+      newRequest: "Vytvořit nový tiket",
+    },
+
     footer: {
       rights: "Všechna práva vyhrazena.",
       builtWith: "Postaveno pomocí Next.js, TypeScriptu a Tailwind CSS.",
@@ -197,6 +332,7 @@ export const translations = {
       services: "Services",
       about: "About",
       contact: "Contact",
+      support: "Support",
     },
 
     language: {
@@ -363,6 +499,141 @@ export const translations = {
       success: "Message sent successfully.",
       configError: "EmailJS configuration is missing in .env.local.",
       submitError: "Failed to send the message. Please try again.",
+    },
+
+    supportPage: {
+      eyebrow: "Support",
+      title: "Report a problem or request a change",
+      description:
+        "Something on your project not working as it should, or need a change? Describe it in the form – you can send several bugs or changes at once in a single ticket. The reply will go to the email address you enter.",
+      howItWorks: "How it works",
+      steps: [
+        "Enter your contact details and your project's name or code.",
+        "Add each bug or change as a separate issue – up to 10 in one ticket.",
+        "After sending you get a ticket number. The reply goes to the email address you provide.",
+      ],
+      projectHintTitle: "Don't know your project code?",
+      projectHint:
+        "The project name is enough. You can also find the code in the support link you received from me.",
+      privacyNote:
+        "Please don't send passwords, access credentials or other sensitive information.",
+    },
+
+    supportForm: {
+      requiredNote: "All fields are required unless stated otherwise.",
+      name: "Name",
+      namePlaceholder: "Jane Smith",
+      email: "Email",
+      emailPlaceholder: "jane@company.com",
+      emailHint: "Replies will be sent to this address.",
+      project: "Project",
+      projectPlaceholder: "Project name or code",
+      projectHint:
+        "For example the website name or the code from the link you received.",
+      subject: "Subject",
+      subjectPlaceholder: "A short summary",
+      description: "Description",
+      descriptionPlaceholder:
+        "What happened, where it happens, how to reproduce it and what you expected…",
+      descriptionCounter: "{count} / {max} characters",
+      contactSection: "Contact and project",
+      issuesSection: "What do you need help with?",
+      issuesHint:
+        "Describe each bug or change as a separate issue. You can add up to 10 issues to one ticket.",
+      issueTitle: "Issue {n}",
+      removeIssue: "Remove",
+      removeIssueLabel: "Remove issue {n}",
+      addIssue: "Add another issue",
+      maxIssuesReached: "A ticket can contain at most 10 issues.",
+      issueAdded: "Issue {n} added.",
+      issueRemoved: "Issue {n} removed.",
+      summaryIssuePrefix: "Issue {n}: ",
+      issueNouns: {
+        one: "issue",
+        few: "issues",
+        many: "issues",
+        other: "issues",
+      },
+      requestType: "Type",
+      requestTypes: {
+        bug: { label: "Bug", hint: "Something isn't working" },
+        change_request: {
+          label: "Change request",
+          hint: "An adjustment or new feature",
+        },
+        other: { label: "Other", hint: "A question or anything else" },
+      },
+      priority: "Priority",
+      priorities: {
+        normal: { label: "Normal", hint: "A regular request" },
+        high: { label: "High", hint: "Blocks operations or customers" },
+      },
+      honeypot: "Leave this field empty",
+      submit: "Send request",
+      submitMany: "Send {count} {noun}",
+      submitting: "Sending…",
+      summaryTitle: "Please fix the following:",
+      suggestionsLabel: "Did you mean:",
+      errors: {
+        name: {
+          required: "Enter your name.",
+          too_short: "Name must be at least 2 characters.",
+          too_long: "Name can be at most 100 characters.",
+        },
+        email: {
+          required: "Enter your email.",
+          invalid: "Enter a valid email address.",
+          too_long: "Email can be at most 254 characters.",
+        },
+        project: {
+          required: "Enter your project's name or code.",
+          too_long: "Project name can be at most 100 characters.",
+          project_not_found:
+            "We couldn't find this project. Check the project name or code.",
+          project_ambiguous:
+            "This matches more than one project. Please use the exact project code.",
+        },
+        subject: {
+          required: "Enter a subject.",
+          too_short: "Subject must be at least 5 characters.",
+          too_long: "Subject can be at most 150 characters.",
+        },
+        description: {
+          required: "Describe your request.",
+          too_short: "Description must be at least 20 characters.",
+          too_long: "Description can be at most 5,000 characters.",
+        },
+        requestType: {
+          required: "Choose a request type.",
+        },
+        priority: {
+          required: "Choose a priority.",
+        },
+        issues: {
+          required: "Add at least one issue.",
+          too_many: "A ticket can contain at most 10 issues.",
+          invalid: "The issues couldn't be processed.",
+        },
+        generic: "Please check this value.",
+      },
+      rootErrors: {
+        network:
+          "We couldn't confirm that your request arrived. Check your connection and try again – resubmitting won't create a duplicate ticket.",
+        rate_limited:
+          "You've sent too many requests. Please try again in {minutes} min.",
+        unavailable:
+          "Your request couldn't be saved right now. Please try again shortly, or use the contact form.",
+        conflict:
+          "This request was already sent with different content. Reload the page and submit it again.",
+        rejected: "Your request couldn't be sent.",
+      },
+      contactLink: "Contact form",
+      successTitle: "Your ticket has been received",
+      successReference: "Your ticket number",
+      successIssues: "It contains {count} {noun}.",
+      successBody:
+        "Your ticket is saved. The reply will be sent to {email}. Please mention the ticket number in any follow-up.",
+      newRequest: "Create a new ticket",
     },
 
     footer: {
