@@ -50,6 +50,23 @@ final class ProjectRepository
         return $statement->fetchAll();
     }
 
+    /**
+     * Active projects offered in the support form's project list.
+     *
+     * @return list<array{code: string, name: string}>
+     */
+    public function listActive(): array
+    {
+        $rows = $this->pdo->query(
+            'SELECT code, display_name FROM support_projects WHERE is_active = 1 ORDER BY display_name, code',
+        )->fetchAll();
+
+        return array_map(
+            static fn (array $row): array => ['code' => (string) $row['code'], 'name' => (string) $row['display_name']],
+            $rows,
+        );
+    }
+
     /** @return list<array<string, mixed>> projects with a comma-separated key list */
     public function listAll(): array
     {

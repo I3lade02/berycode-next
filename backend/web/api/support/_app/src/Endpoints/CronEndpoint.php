@@ -16,8 +16,8 @@ use BeryCode\Support\Time;
  * Over HTTP it requires SUPPORT_CRON_SECRET, sent as "Authorization: Bearer …",
  * as an "X-Support-Cron-Secret" header, or (for schedulers that can only call a
  * plain URL, such as Endora's cron) as ?key=…. Optionally restricted to
- * SUPPORT_CRON_ALLOWED_IPS. From the command line (php cron.php) no secret is
- * needed.
+ * SUPPORT_CRON_ALLOWED_IPS. HEAD answers 200 without running anything (existence
+ * probes). From the command line (php cron.php) no secret is needed.
  */
 final class CronEndpoint
 {
@@ -33,7 +33,18 @@ final class CronEndpoint
         $logger = $this->app->logger();
 
         if (!$request->cli) {
+            if ($request->method === 'HEAD') {
+                // Schedulers may check that the script exists with a HEAD request
+                // before saving a job and reject anything but 200. A HEAD runs
+                // nothing and reveals no more than a 401 would, so it needs no key.
+                $logger->info('cron_probe', ['method' => 'HEAD']);
+
+                return HttpResponse::json(200, ['ok' => true]);
+            }
+
             if (!in_array($request->method, ['GET', 'POST'], true)) {
+                $logger->warning('cron_rejected', ['reason' => 'method_not_allowed', 'method' => $request->method]);
+
                 return HttpResponse::json(405, ['ok' => false, 'error' => 'method_not_allowed']);
             }
 

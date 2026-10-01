@@ -1,12 +1,16 @@
 import type { Locale } from "@/lib/i18n/translations";
 import type { SupportFormValues } from "./schema";
 
-// Same-origin PHP endpoint (backend/web/api/support/tickets.php). In `next dev`
-// it is proxied to the local PHP server, see next.config.ts.
+// Same-origin PHP endpoints (backend/web/api/support/). In `next dev` they are
+// proxied to the local PHP server, see next.config.ts.
 export const SUPPORT_TICKETS_URL = "/api/support/tickets.php";
+export const SUPPORT_PROJECTS_URL = "/api/support/projects.php";
 
 // Up to 10 issues can make a large request; allow for slow connections.
 const REQUEST_TIMEOUT_MS = 30_000;
+const PROJECTS_TIMEOUT_MS = 10_000;
+
+export type SupportProject = { code: string; name: string };
 
 export type SubmitResult =
   | { kind: "success"; reference: string }
@@ -32,6 +36,51 @@ export function createIdempotencyKey() {
 
   return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join(
     "",
+  );
+}
+
+/** Active projects for the form's list, or null when they can't be loaded. */
+export async function fetchSupportProjects(): Promise<SupportProject[] | null> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), PROJECTS_TIMEOUT_MS);
+
+  try {
+    const response = await fetch(SUPPORT_PROJECTS_URL, {
+      headers: { Accept: "application/json" },
+      credentials: "same-origin",
+      signal: controller.signal,
+    });
+    const body = (await response.json()) as {
+      ok?: unknown;
+      projects?: unknown;
+    };
+
+    if (!response.ok || body.ok !== true || !Array.isArray(body.projects)) {
+      return null;
+    }
+
+    return body.projects.filter(
+      (item): item is SupportProject =>
+        typeof item?.code === "string" && typeof item?.name === "string",
+    );
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+/** Same normalization as the server's ProjectKey (NFC, whitespace, case). */
+const projectKey = (value: string) =>
+  value.normalize("NFC").replace(/\s+/g, " ").trim().toLowerCase();
+
+/** The listed project a code or name (e.g. from ?project=) refers to. */
+export function findProject(projects: SupportProject[], value: string) {
+  const key = projectKey(value);
+
+  return projects.find(
+    (project) =>
+      projectKey(project.code) === key || projectKey(project.name) === key,
   );
 }
 

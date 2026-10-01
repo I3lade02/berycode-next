@@ -28,6 +28,21 @@ final class CronEndpointTest extends DbTestCase
         $this->assertSame(200, $this->cron([], [], '127.0.0.1', true)->status, 'CLI needs no secret');
     }
 
+    public function testHeadProbeAnswersWithoutKeyOrWork(): void
+    {
+        $this->slack->queue(TransportResult::networkError('network:dns', false));
+        $this->runDeferred($this->submit($this->validPayload()));
+        $this->clock->advance(7200);
+
+        $probe = $this->app->cronEndpoint()->handle(new HttpRequest('HEAD', [], '', [], ['REMOTE_ADDR' => '198.51.100.7']));
+
+        $this->assertSame(200, $probe->status);
+        $this->assertSame('PENDING', $this->ticket('BC-000001')['delivery_state'], 'HEAD runs nothing');
+
+        $put = $this->app->cronEndpoint()->handle(new HttpRequest('PUT', [], '', ['key' => TestDatabase::CRON_SECRET], ['REMOTE_ADDR' => '62.109.128.59']));
+        $this->assertSame(405, $put->status);
+    }
+
     public function testOptionalIpAllowlist(): void
     {
         $this->app = $this->makeApp(['SUPPORT_CRON_ALLOWED_IPS' => '62.109.128.59, 212.57.32.9']);

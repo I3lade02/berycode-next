@@ -8,6 +8,7 @@ import { useFieldArray, useForm, useWatch } from "react-hook-form";
 import { CircleCheck, LoaderCircle, Plus, TriangleAlert } from "lucide-react";
 
 import Input from "@/components/ui/Input";
+import Select from "@/components/ui/Select";
 import SupportIssueCard, {
   issueAnchor,
   issueTitleId,
@@ -15,7 +16,13 @@ import SupportIssueCard, {
 import { useLanguage } from "@/components/providers/LanguageProvider";
 import type { Locale } from "@/lib/i18n/translations";
 import { cn } from "@/lib/utils";
-import { createIdempotencyKey, submitSupportRequest } from "@/lib/support/api";
+import {
+  createIdempotencyKey,
+  fetchSupportProjects,
+  findProject,
+  submitSupportRequest,
+  type SupportProject,
+} from "@/lib/support/api";
 import {
   CONTACT_FIELDS,
   countCharacters,
@@ -37,6 +44,11 @@ type Success = { reference: string; email: string; issueCount: number };
 
 type SummaryEntry = { key: string; anchor: string; message: string };
 
+// "unavailable" falls back to the free-text field the server still accepts.
+type ProjectList =
+  | { status: "loading" | "unavailable" }
+  | { status: "ready"; projects: SupportProject[] };
+
 const MAX_ISSUES = SUPPORT_LIMITS.issues.max;
 const ADD_ISSUE_ID = "support-add-issue";
 const fieldId = (field: ContactField) => `support-${field}`;
@@ -56,7 +68,7 @@ function countNoun(
   return nouns[new Intl.PluralRules(locale).select(count)] ?? nouns.other;
 }
 
-/** Reads ?project= and prefills the field. The server still validates it. */
+/** Reads ?project= to preselect the project. The server still validates it. */
 function ProjectPrefill({ onPrefill }: { onPrefill: (value: string) => void }) {
   const project = useSearchParams().get("project");
 
@@ -74,6 +86,10 @@ export default function SupportForm() {
   const [success, setSuccess] = useState<Success | null>(null);
   const [rootError, setRootError] = useState<RootError | null>(null);
   const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [projectList, setProjectList] = useState<ProjectList>({
+    status: "loading",
+  });
+  const [prefill, setPrefill] = useState<string | null>(null);
   const [showSummary, setShowSummary] = useState(false);
   // Bumped after a failed submit so focus moves to the summary only then.
   const [summaryFocusRequest, setSummaryFocusRequest] = useState(0);
@@ -114,20 +130,50 @@ export default function SupportForm() {
     name: "issues",
   });
   const watchedIssues = useWatch({ control, name: "issues" }) ?? [];
+  const selectedProject = useWatch({ control, name: "project" });
+  const projectSelect = projectList.status !== "unavailable";
 
-  const prefillProject = useCallback(
-    (value: string) => {
-      const clean = value
-        .replace(/\s+/g, " ")
-        .trim()
-        .slice(0, SUPPORT_LIMITS.project.max);
+  const prefillProject = useCallback((value: string) => {
+    const clean = value
+      .replace(/\s+/g, " ")
+      .trim()
+      .slice(0, SUPPORT_LIMITS.project.max);
 
-      if (clean && !getValues("project")) {
-        setValue("project", clean);
-      }
-    },
-    [getValues, setValue],
-  );
+    setPrefill(clean || null);
+  }, []);
+
+  useEffect(() => {
+    let ignore = false;
+
+    fetchSupportProjects().then((projects) => {
+      if (ignore) return;
+
+      setProjectList(
+        projects && projects.length > 0
+          ? { status: "ready", projects }
+          : { status: "unavailable" },
+      );
+    });
+
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
+  // Applies ?project= once it is known whether the list or the text field shows.
+  useEffect(() => {
+    if (!prefill || projectList.status === "loading" || getValues("project")) {
+      return;
+    }
+
+    if (projectList.status === "ready") {
+      const project = findProject(projectList.projects, prefill);
+
+      if (project) setValue("project", project.code);
+    } else {
+      setValue("project", prefill);
+    }
+  }, [prefill, projectList, getValues, setValue]);
 
   useEffect(() => {
     if (summaryFocusRequest > 0) summaryRef.current?.focus();
@@ -150,7 +196,12 @@ export default function SupportForm() {
   }, [fields.length]);
 
   function contactMessage(field: ContactField) {
-    const code = errors[field]?.message;
+    let code = errors[field]?.message;
+
+    // An empty list choice reads "choose your project", not "enter its name".
+    if (field === "project" && code === "required" && projectSelect) {
+      code = "not_selected";
+    }
     const messages = f.errors[field] as Record<string, string>;
 
     return (code && messages[code]) || f.errors.generic;
@@ -323,7 +374,12 @@ export default function SupportForm() {
   }
 
   function applySuggestion(name: string) {
-    setValue("project", name, { shouldValidate: true });
+    const listed =
+      projectList.status === "ready"
+        ? findProject(projectList.projects, name)
+        : undefined;
+
+    setValue("project", listed?.code ?? name, { shouldValidate: true });
     setSuggestions([]);
   }
 
@@ -496,20 +552,50 @@ export default function SupportForm() {
           >
             {f.project}
           </label>
-          <Input
-            id={fieldId("project")}
-            autoComplete="off"
-            maxLength={SUPPORT_LIMITS.project.max}
-            placeholder={f.projectPlaceholder}
-            aria-required="true"
-            aria-invalid={errors.project ? true : undefined}
-            aria-describedby={describedBy("project", true)}
-            className={cn(errors.project && "border-red-400")}
-            {...register("project")}
-          />
-          <p id={hintId("project")} className="text-xs text-zinc-500">
-            {f.projectHint}
-          </p>
+          {projectSelect ? (
+            <Select
+              id={fieldId("project")}
+              aria-required="true"
+              aria-busy={projectList.status === "loading" || undefined}
+              aria-invalid={errors.project ? true : undefined}
+              aria-describedby={describedBy("project")}
+              className={cn(
+                !selectedProject && "text-zinc-400",
+                errors.project && "border-red-400",
+              )}
+              {...register("project")}
+            >
+              <option value="">
+                {projectList.status === "loading"
+                  ? f.projectLoading
+                  : f.projectSelectPlaceholder}
+              </option>
+              {projectList.status === "ready"
+                ? projectList.projects.map((project) => (
+                    <option key={project.code} value={project.code}>
+                      {project.name}
+                    </option>
+                  ))
+                : null}
+            </Select>
+          ) : (
+            <>
+              <Input
+                id={fieldId("project")}
+                autoComplete="off"
+                maxLength={SUPPORT_LIMITS.project.max}
+                placeholder={f.projectPlaceholder}
+                aria-required="true"
+                aria-invalid={errors.project ? true : undefined}
+                aria-describedby={describedBy("project", true)}
+                className={cn(errors.project && "border-red-400")}
+                {...register("project")}
+              />
+              <p id={hintId("project")} className="text-xs text-zinc-500">
+                {f.projectHint}
+              </p>
+            </>
+          )}
           {errors.project ? (
             <p id={errorId("project")} className="text-sm text-red-600">
               {contactMessage("project")}

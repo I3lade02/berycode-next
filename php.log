@@ -1,0 +1,15 @@
+[01-Oct-2026 11:33:52 Europe/Bratislava] [berycode-support] {"level":"info","event":"cron_run","delivered":0,"retry_scheduled":0,"failed":0,"synced":0,"sync_retry_scheduled":0,"sync_failed":0,"skipped":0,"rate_limit_rows_purged":0,"interactions_purged":0}
+[01-Oct-2026 11:39:48 Europe/Bratislava] [berycode-support] {"level":"warning","event":"cron_rejected","reason":"bad_secret"}
+[01-Oct-2026 11:39:48 Europe/Bratislava] [berycode-support] {"level":"warning","event":"cron_rejected","reason":"bad_secret"}
+[01-Oct-2026 11:39:48 Europe/Bratislava] [berycode-support] {"level":"warning","event":"cron_rejected","reason":"bad_secret"}
+[01-Oct-2026 12:21:54 Europe/Bratislava] [berycode-support] {"level":"info","event":"ticket_project_rejected","reason":"project_not_found"}
+[01-Oct-2026 12:22:17 Europe/Bratislava] [berycode-support] {"level":"info","event":"ticket_project_rejected","reason":"project_not_found"}
+[01-Oct-2026 12:23:06 Europe/Bratislava] [berycode-support] {"level":"info","event":"ticket_project_rejected","reason":"project_not_found"}
+[01-Oct-2026 12:24:58 Europe/Bratislava] [berycode-support] {"level":"warning","event":"cron_rejected","reason":"bad_secret"}
+[01-Oct-2026 12:46:36 Europe/Bratislava] [berycode-support] {"level":"warning","event":"cron_rejected","reason":"bad_secret"}
+[01-Oct-2026 12:48:10 Europe/Bratislava] [berycode-support] {"level":"warning","event":"cron_rejected","reason":"bad_secret"}
+[01-Oct-2026 13:27:09 Europe/Bratislava] [berycode-support] {"level":"warning","event":"cron_rejected","reason":"bad_secret"}
+[01-Oct-2026 13:27:09 Europe/Bratislava] [berycode-support] {"level":"warning","event":"cron_rejected","reason":"bad_secret"}
+[01-Oct-2026 13:29:52 Europe/Bratislava] [berycode-support] {"level":"warning","event":"cron_rejected","reason":"ip_not_allowed"}
+[01-Oct-2026 13:30:00 Europe/Bratislava] [berycode-support] {"level":"warning","event":"cron_rejected","reason":"bad_secret"}
+[01-Oct-2026 13:30:06 Europe/Bratislava] [berycode-support] {"level":"warning","event":"cron_rejected","reason":"ip_not_allowed"}

@@ -7,6 +7,7 @@ namespace BeryCode\Support;
 use BeryCode\Support\Database\Database;
 use BeryCode\Support\Delivery\DeliveryService;
 use BeryCode\Support\Endpoints\CronEndpoint;
+use BeryCode\Support\Endpoints\ProjectsEndpoint;
 use BeryCode\Support\Endpoints\SlackActionsEndpoint;
 use BeryCode\Support\Endpoints\TicketEndpoint;
 use BeryCode\Support\Projects\ProjectConfigSync;
@@ -138,6 +139,11 @@ final class App
     public function ticketEndpoint(): TicketEndpoint
     {
         return new TicketEndpoint($this);
+    }
+
+    public function projectsEndpoint(): ProjectsEndpoint
+    {
+        return new ProjectsEndpoint($this);
     }
 
     public function slackActionsEndpoint(): SlackActionsEndpoint

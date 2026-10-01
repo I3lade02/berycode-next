@@ -184,13 +184,13 @@ export const translations = {
         "Něco na vašem projektu nefunguje, jak má, nebo potřebujete úpravu? Popište to ve formuláři – více chyb nebo změn můžete poslat najednou v jednom tiketu. Odpověď přijde na e-mail, který uvedete.",
       howItWorks: "Jak to funguje",
       steps: [
-        "Vyplňte kontakt a název nebo kód projektu.",
+        "Vyplňte kontakt a vyberte svůj projekt.",
         "Každou chybu nebo změnu přidejte jako samostatný požadavek – až 10 v jednom tiketu.",
         "Po odeslání dostanete číslo tiketu. Odpověď přijde na zadaný e-mail.",
       ],
-      projectHintTitle: "Nevíte kód projektu?",
+      projectHintTitle: "Nevidíte svůj projekt?",
       projectHint:
-        "Stačí název projektu. Kód najdete i v odkazu na podporu, který jste ode mě dostali.",
+        "V seznamu jsou všechny projekty, které mají podporu. Pokud tam ten váš chybí, napište mi přes kontaktní formulář.",
       privacyNote:
         "Neposílejte prosím hesla, přístupové údaje ani jiné citlivé informace.",
     },
@@ -205,6 +205,8 @@ export const translations = {
       project: "Projekt",
       projectPlaceholder: "Název nebo kód projektu",
       projectHint: "Např. název webu nebo kód z odkazu, který jste dostali.",
+      projectSelectPlaceholder: "Vyberte projekt",
+      projectLoading: "Načítám projekty…",
       subject: "Předmět",
       subjectPlaceholder: "Stručně, o co jde",
       description: "Popis",
@@ -262,6 +264,7 @@ export const translations = {
         },
         project: {
           required: "Uveďte název nebo kód projektu.",
+          not_selected: "Vyberte svůj projekt.",
           too_long: "Název projektu může mít nejvýše 100 znaků.",
           project_not_found:
             "Tento projekt se nepodařilo najít. Zkontrolujte název nebo kód projektu.",
@@ -508,13 +511,13 @@ export const translations = {
         "Something on your project not working as it should, or need a change? Describe it in the form – you can send several bugs or changes at once in a single ticket. The reply will go to the email address you enter.",
       howItWorks: "How it works",
       steps: [
-        "Enter your contact details and your project's name or code.",
+        "Enter your contact details and choose your project.",
         "Add each bug or change as a separate issue – up to 10 in one ticket.",
         "After sending you get a ticket number. The reply goes to the email address you provide.",
       ],
-      projectHintTitle: "Don't know your project code?",
+      projectHintTitle: "Can't find your project?",
       projectHint:
-        "The project name is enough. You can also find the code in the support link you received from me.",
+        "The list shows every project with support. If yours is missing, write to me through the contact form.",
       privacyNote:
         "Please don't send passwords, access credentials or other sensitive information.",
     },
@@ -530,6 +533,8 @@ export const translations = {
       projectPlaceholder: "Project name or code",
       projectHint:
         "For example the website name or the code from the link you received.",
+      projectSelectPlaceholder: "Choose your project",
+      projectLoading: "Loading projects…",
       subject: "Subject",
       subjectPlaceholder: "A short summary",
       description: "Description",
@@ -587,6 +592,7 @@ export const translations = {
         },
         project: {
           required: "Enter your project's name or code.",
+          not_selected: "Choose your project.",
           too_long: "Project name can be at most 100 characters.",
           project_not_found:
             "We couldn't find this project. Check the project name or code.",

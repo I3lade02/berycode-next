@@ -1,0 +1,18 @@
+# Site-wide HTTP -> HTTPS redirect, copied to the web root by `npm run build`.
+#
+# This replaces Endora's "Vynutit přesměrování http:// na https://" checkbox,
+# which must be OFF: that redirect happens in Endora's nginx for every path, and
+# Endora's cron only calls plain http:// URLs and treats the 301 as "script
+# doesn't exist". So cron.php is the one path still served over HTTP. It is
+# protected by SUPPORT_CRON_SECRET (and optionally SUPPORT_CRON_ALLOWED_IPS).
+#
+# Both HTTPS checks are needed: depending on how Endora's nginx proxies to
+# Apache, HTTPS shows up either as %{HTTPS} or as X-Forwarded-Proto. Checking
+# only one could redirect HTTPS requests to themselves forever.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTPS} !=on
+    RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+    RewriteCond %{REQUEST_URI} !^/api/support/cron\.php$
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+</IfModule>

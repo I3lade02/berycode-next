@@ -95,6 +95,10 @@ final class HttpEndToEndTest extends TestCase
         $this->assertSame($this->ticketRow(1)['slack_message_ts'], $posts[2]['payload']['thread_ts']);
         $this->assertNotNull($this->ticketRow(1)['slack_message_ts'], 'message ts stored');
 
+        [$status, $body] = $this->get('/api/support/projects.php');
+        $this->assertSame(200, $status);
+        $this->assertSame(['acme-web', 'nord-shop'], array_column($body['projects'], 'code'));
+
         [$status] = $this->get('/api/support/_app/bootstrap.php');
         $this->assertSame(404, $status, 'private directory is not served');
         [$status] = $this->get('/api/support/cron.php');

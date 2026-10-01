@@ -101,7 +101,7 @@ This one PHP file holds every secret. You upload it to the server, and the CLI o
 
    Replace the demo entries with:
    - a test project: `"code": "berycode-test"`, the channel ID of `#support-test`, `"public": false`
-   - your real client projects, each with its channel ID. Leave `"public": false` unless it's fine for that project's name to be suggested to anyone who mistypes.
+   - your real client projects, each with its channel ID. Every active project's name appears in the support form's project list, which anyone can open. `"public"` only affects typo suggestions in the fallback text field, so `false` is fine.
 
    For example:
 
@@ -156,7 +156,8 @@ This one PHP file holds every secret. You upload it to the server, and the CLI o
    ```
    `out/` now contains the website and `out/api/support/` (the backend). It never contains your config file.
 2. Upload the **contents of `out/`** into Endora's **`web/`** folder over FTP, the same way you deploy the site today. Afterwards these must exist on the server:
-   `web/api/support/tickets.php`, `web/api/support/slack-actions.php`, `web/api/support/cron.php`, `web/api/support/_app/…`
+   `web/.htaccess` (HTTPS redirect, see step 7), `web/api/support/tickets.php`, `web/api/support/slack-actions.php`, `web/api/support/cron.php`, `web/api/support/_app/…`
+   Many FTP clients hide dotfiles, so turn on "show hidden files" to check that `.htaccess` was uploaded. If `web/` already had an `.htaccess`, merge its rules into `backend/web/.htaccess` instead of overwriting them.
 3. Upload **`berycode-support-config.php`** into the **FTP root, next to the `web/` folder** (not inside it). That location is not reachable from the web.
 
 ## Step 6 — Check the server (5 min)
@@ -180,21 +181,32 @@ This one PHP file holds every secret. You upload it to the server, and the CLI o
 
 The cron job retries Slack deliveries that failed, and message updates. Run it every **5 minutes**.
 
-- **Endora Fun/Max:** webadmin → **HOSTING → WEB → CRON** → new task with the URL
-  `https://berycode.cz/api/support/cron.php?key=<SUPPORT_CRON_SECRET>`, every 5 minutes.
-  Optional hardening: add `'SUPPORT_CRON_ALLOWED_IPS' => '62.109.128.59,212.57.32.9,62.109.150.10,212.57.32.162'` (Endora's cron servers) to the config file and upload it again.
+- **Endora Fun/Max:** Endora's cron calls the script over plain `http://`. When you save the job, Endora first checks the URL (it appears to use a `HEAD` request) and refuses anything other than a 200 response with **"The script for cron job doesn't exist"**. That includes a 301 to HTTPS. So Endora's own HTTPS redirect must be off: the `.htaccess` from step 5 does the redirect instead and skips `cron.php`, and `cron.php` answers `HEAD` with 200. Do it in this order:
+  1. With Endora's HTTPS redirect still **on**, check that `web/.htaccess` is uploaded, then open <https://berycode.cz/> and <https://berycode.cz/support/>. Both must load normally. If the browser reports **too many redirects**, delete `web/.htaccess` right away, then stop here and investigate. Nothing else has changed yet.
+  2. MyEndora → your domain → **Zabezpečení (SSL/TLS)** → untick **Vynutit přesměrování http:// na https://**. The change can take several minutes to apply.
+  3. Check it from a terminal. Browsers cache 301s, so a browser can mislead here:
+     ```bash
+     curl -sI http://berycode.cz/support/ | head -1                 # 301: the .htaccess redirect works
+     curl -sI http://www.berycode.cz/api/support/cron.php | head -1 # 200: what Endora's check sees
+     curl -s http://www.berycode.cz/api/support/cron.php; echo      # {"ok":false,"error":"unauthorized"}: no redirect
+     ```
+     If the 301s still show nginx's own page (`curl -s http://berycode.cz/support/`), Endora's redirect is still active.
+  4. webadmin → **HOSTING → WEB → CRON** → new task, **Interval**, every 5 minutes. Enter the script URL **without `http://` and with `www.`**, as Endora's help asks:
+     `www.berycode.cz/api/support/cron.php?key=<SUPPORT_CRON_SECRET>`
+     For the first run, enter your email address and tick **Poslat vždy**. The email should contain `{"ok":true,…}`. Each run also adds a `cron_run` line to the PHP error log in the `log` folder (FTP root), and each check from the form adds a `cron_probe` line.
+  5. Optional: the key travels over plain HTTP, so you can restrict the job to Endora's cron servers with `'SUPPORT_CRON_ALLOWED_IPS' => '62.109.128.59,212.57.32.9,62.109.150.10,212.57.32.162'` in the config file. Add it only **after** the job is saved. First check that the `request_ip` in the emailed output is in that list; if not, use the IP from the email. Afterwards your own browser tests of the cron URL get 403 (`ip_not_allowed` in the log).
 - **Endora Free:** at <https://cron-job.org>, create a job for `https://berycode.cz/api/support/cron.php`, every 5 minutes. Under the advanced settings, add the request header `Authorization: Bearer <SUPPORT_CRON_SECRET>`, so the secret isn't in the URL.
 
 After 5–10 minutes, the scheduler's history should show HTTP 200 responses.
 
 ## Step 8 — End-to-end test with the test project (10 min)
 
-1. Open <https://berycode.cz/support/?project=berycode-test>. The project field is prefilled.
+1. Open <https://berycode.cz/support/?project=berycode-test>. **BeryCode test** is preselected in the project list.
 2. Submit a ticket with **one issue**. You see a `BC-000001` number, and within seconds a message appears in `#support-test`.
 3. Submit a ticket with **three issues**. You get one overview message, plus three replies in its thread.
 4. On one of the messages click **Přiřadit mně → Začít pracovat → Vyřešit → Znovu otevřít** (Assign → Start → Resolve → Reopen). The same message updates after each click.
 5. If possible, have someone who is **not** in `SLACK_ALLOWED_STAFF_USER_IDS` click a button. Only they see a "not allowed" note, and nothing changes.
-6. Type a non-existent project into the form. It is rejected with "project not found", and nothing is posted.
+6. Open the project list without the `?project=` link. It shows every active project and no inactive one.
 7. Check the status:
    - Path A: `npm run support -- status --config=berycode-support-config.php` shows `delivery DELIVERED=…` and `sync IDLE=…`.
    - Path B: in phpMyAdmin run
@@ -205,7 +217,7 @@ If a Slack message doesn't arrive, see [Troubleshooting](#troubleshooting).
 ## Step 9 — Go live
 
 1. Send each client their link: `https://berycode.cz/support/?project=<their code>`.
-2. Keep `berycode-test` for future checks (it's private and not suggested), or set `"active": false` and sync again.
+2. `berycode-test` appears in every customer's project list while it's active. Set `"active": false` and sync again, and reactivate it when you need to test.
 3. Merge and push the `feature/support` branch.
 
 ---
@@ -219,16 +231,18 @@ If a Slack message doesn't arrive, see [Troubleshooting](#troubleshooting).
 
 ## Troubleshooting
 
-| Symptom                                                                                             | Likely cause                                                                 | Fix                                                                                        |
-| --------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Form says the request couldn't be saved                                                             | config not loaded or database unreachable                                    | step 6.2; check the `log` folder                                                           |
-| Ticket saved but no Slack message; status shows `slack:not_in_channel` or `slack:channel_not_found` | bot not in the channel, or wrong channel ID                                  | `/invite @BeryCode Support` or fix the ID and sync; then `deliveries:requeue --all-failed` |
-| `slack:invalid_auth`, `token_revoked`                                                               | wrong or revoked bot token                                                   | copy the token again (reinstall the app if needed), upload the config, requeue             |
-| `slack:network:…` again and again                                                                   | the server can't reach slack.com                                             | ask Endora support to allow outbound HTTPS to `slack.com`                                  |
-| Slack shows "This app responded with an error" on a click                                           | wrong signing secret, team ID or app ID, or the server can't load the config | recheck those values, upload the config again, test the cron URL                           |
-| A colleague's clicks only produce "not allowed"                                                     | their member ID isn't in the allowlist                                       | add it to `SLACK_ALLOWED_STAFF_USER_IDS`, upload the config                                |
-| Clicks are saved but the message doesn't change until later                                         | the immediate update failed; cron retries it                                 | check that the cron job runs (step 7)                                                      |
-| Many customers get "too many requests"                                                              | `request_ip` is the proxy's address                                          | set `SUPPORT_CLIENT_IP_HEADER` (step 6.2)                                                  |
+| Symptom                                                                                             | Likely cause                                                                                     | Fix                                                                                        |
+| --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| Form says the request couldn't be saved                                                             | config not loaded or database unreachable                                                        | step 6.2; check the `log` folder                                                           |
+| Ticket saved but no Slack message; status shows `slack:not_in_channel` or `slack:channel_not_found` | bot not in the channel, or wrong channel ID                                                      | `/invite @BeryCode Support` or fix the ID and sync; then `deliveries:requeue --all-failed` |
+| `slack:invalid_auth`, `token_revoked`                                                               | wrong or revoked bot token                                                                       | copy the token again (reinstall the app if needed), upload the config, requeue             |
+| `slack:network:…` again and again                                                                   | the server can't reach slack.com                                                                 | ask Endora support to allow outbound HTTPS to `slack.com`                                  |
+| Slack shows "This app responded with an error" on a click                                           | wrong signing secret, team ID or app ID, or the server can't load the config                     | recheck those values, upload the config again, test the cron URL                           |
+| A colleague's clicks only produce "not allowed"                                                     | their member ID isn't in the allowlist                                                           | add it to `SLACK_ALLOWED_STAFF_USER_IDS`, upload the config                                |
+| Clicks are saved but the message doesn't change until later                                         | the immediate update failed; cron retries it                                                     | check that the cron job runs (step 7)                                                      |
+| Many customers get "too many requests"                                                              | `request_ip` is the proxy's address                                                              | set `SUPPORT_CLIENT_IP_HEADER` (step 6.2)                                                  |
+| Endora CRON: "The script for cron job doesn't exist"                                                | the plain-HTTP URL doesn't answer 200: Endora's HTTPS redirect is still on, or an old `cron.php` | step 7, checks 2–3; upload `out/` again                                                    |
+| Cron runs stop; the log shows `cron_rejected` with `ip_not_allowed`                                 | the cron server's IP isn't in `SUPPORT_CRON_ALLOWED_IPS`                                         | add the IP from `request_ip`, or remove the allowlist                                      |
 
 **Path B equivalents** of `status` and `requeue`, to run in phpMyAdmin:
 

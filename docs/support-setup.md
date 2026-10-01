@@ -14,8 +14,10 @@ One ticket can contain **up to 10 issues**. Each issue has its own type, priorit
 berycode.cz is a Next.js **static export** (`output: "export"`) served by Endora, which has PHP and MySQL but no Node.js. The backend is therefore plain PHP 8.1+ with no Composer dependencies:
 
 ```
+backend/web/.htaccess             copied into out/ (web root): HTTP → HTTPS redirect, except cron.php
 backend/web/api/support/          copied into out/api/support/ by `npm run build` (postbuild)
   tickets.php                     POST  public form intake
+  projects.php                    GET   active projects for the form's project list
   slack-actions.php               POST  Slack interactivity Request URL
   cron.php                        GET   retry job (secret-protected)
   _app/                           code; no secrets; every file is inert over HTTP (+ .htaccess deny)
@@ -61,21 +63,21 @@ Collation note: lookup keys use `utf8mb4_bin` and are normalized in PHP (trimmed
 
 Mappings live only in the database and are never sent to the browser.
 
-1. `cp backend/config/projects.example.json backend/config/projects.json` (the copy is git-ignored because client names are private).
+1. `cp backend/config/projects.example.json backend/config/projects.json` (the copy is git-ignored because it holds real client data).
 2. For each project set:
    - `code`: unique, 2–64 chars, `a-z 0-9 . _ -`. It is used in prefill links.
-   - `name`: display name, also accepted as input.
+   - `name`: display name. Customers pick it from the form's project list; it is also accepted as typed input.
    - `aliases`: other names customers may type.
    - `slackChannelId`: the **ID**, not the name. Channel → name header → bottom of _About_ → Channel ID (`C…`).
-   - `active`: inactive projects are treated as unknown.
-   - `public`: only public projects are ever suggested to customers who mistype. The default is `false`.
+   - `active`: every active project is listed in the support form, which anyone can open. Inactive projects are not listed and are treated as unknown.
+   - `public`: only public projects are suggested when a typed name is misspelled. Customers only type when the project list can't be loaded and the form falls back to a text field. The default is `false`.
 3. Apply it: `npm run support -- projects:sync backend/config/projects.json --config=berycode-support-config.php`. Add `--dry-run` to preview, or `--deactivate-missing` to deactivate projects not in the file. **Without remote MySQL:** add `--print-sql` instead. It prints the same change as SQL, with no database connection needed; paste it into phpMyAdmin's SQL tab.
 
 The command rejects any configuration where one normalized code, name or alias would belong to two projects. The database also enforces this with a primary key. Changing a project's channel affects **new** tickets only: each ticket stores its destination when it is created.
 
 `npm run support -- seed:demo` loads the fictional example projects for local development. It refuses to run when `SUPPORT_ENV=production`.
 
-Prefilled links for customers: `https://berycode.cz/support/?project=<code>`. The value only fills the field; the server validates it like typed input.
+Prefilled links for customers: `https://berycode.cz/support/?project=<code>`. The link preselects that project in the list (a code or name works); the server still validates what is submitted.
 
 ## 5. Interactivity URL
 
@@ -119,7 +121,12 @@ Client IP check: open `https://berycode.cz/api/support/cron.php?key=<SUPPORT_CRO
 
 `cron.php` delivers pending tickets, retries failed message updates and purges expired rate-limit rows. Run it every **5 minutes**:
 
-- **Endora Fun/Max:** administration → HOSTING → WEB → CRON → URL `https://berycode.cz/api/support/cron.php?key=<SUPPORT_CRON_SECRET>`. Optionally set `SUPPORT_CRON_ALLOWED_IPS` to Endora's cron servers (62.109.128.59, 212.57.32.9, 62.109.150.10, 212.57.32.162).
+- **Endora Fun/Max:** administration → HOSTING → WEB → CRON → script URL `www.berycode.cz/api/support/cron.php?key=<SUPPORT_CRON_SECRET>`, with no `http://`. Endora calls cron over plain HTTP. When saving, it checks the URL (apparently with `HEAD`) and rejects anything but a 200 with "The script for cron job doesn't exist". So:
+  - Endora's **Vynutit přesměrování http:// na https://** (domain → Zabezpečení SSL/TLS) must be off. `backend/web/.htaccess`, copied to the web root at build, does the HTTPS redirect instead and exempts only `/api/support/cron.php`.
+  - `cron.php` answers `HEAD` with 200, without the key and without doing any work, and logs `cron_probe`.
+
+  The [go-live guide](support-go-live.md#step-7--schedule-the-retry-job-5-min) gives a loop-safe order for switching over. Each run logs a `cron_run` line to the PHP error log. Optionally, set `SUPPORT_CRON_ALLOWED_IPS` to Endora's cron servers (62.109.128.59, 212.57.32.9, 62.109.150.10, 212.57.32.162) after the job is saved. First check the emailed `request_ip`.
+
 - **Endora Free** (no cron): use an external scheduler such as cron-job.org. Prefer sending the secret as the header `Authorization: Bearer <secret>` over putting it in the query string. Also set `SUPPORT_SLACK_TIMEOUT_SECONDS=5` and `SUPPORT_CRON_TIME_BUDGET_SECONDS=6`.
 - **Manually from your machine:** `npm run support -- deliveries:run --config=berycode-support-config.php`.
 
@@ -159,7 +166,7 @@ To check the exact production layout, run `npm run build`, then `php -S 127.0.0.
 - [ ] The bot is invited to each project channel; `projects:list` shows the right channel IDs.
 - [ ] Submitting `/support/?project=<code>` shows a `BC-…` number, and the message appears in that project's channel within seconds.
 - [ ] A ticket with 3 issues arrives as one overview message with the 3 issues' details as thread replies, in order.
-- [ ] An unknown project is rejected; a mistyped **public** project is suggested; a mistyped private one is not.
+- [ ] The form's project list shows every active project and no inactive one.
 - [ ] **Assign to me → Start work → Resolve → Reopen** each update the same Slack message. `status` shows sync `IDLE`.
 - [ ] A Slack member **not** in the allowlist gets a private "not allowed" reply, and nothing changes.
 - [ ] The cron URL returns `{"ok":true,…}`, `request_ip` looks right, and the Endora cron job is scheduled.
